@@ -5,3 +5,4 @@ types/truffle-contracts
 bot
 .env
 test
+yarn-error.log
