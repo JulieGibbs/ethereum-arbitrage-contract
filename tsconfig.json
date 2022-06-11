@@ -1,0 +1,48 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "baseUrl": ".",
+    "rootDir": "./",
+    "checkJs": false,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "es2019"
+    ],
+    "module": "CommonJS",
+    "noImplicitAny": false,
+    "outDir": "dist",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
+    "preserveConstEnums": true,
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "target": "ES2019",
+    "types": [
+      "@types/node",
+      "@types/chai",
+      "@types/mocha"
+    ],
+    "typeRoots": [
+      "node_modules/@types",
+      "./types"
+    ]
+  },
+  "include": [
+    "**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "build",
+    "cache",
+    "artifacts"
+  ]
+}
