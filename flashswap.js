@@ -4,7 +4,8 @@ const uniswapFlashAbi = require("./build/contracts/UniswapFlash.json");
 const IERC20 = require('@uniswap/v2-periphery/build/IERC20.json');
 const INFURA_API_KEY = process.env.INFURA_API_KEY || '';
 const PRIVATE_KEY = process.env.PRIVATE_KEY || '';
-const web3 = new Web3(`https://kovan.infura.io/v3/${INFURA_API_KEY}`);
+const network = 'kovan';
+const web3 = new Web3(`https://${network}.infura.io/v3/${INFURA_API_KEY}`);
 const wallet = web3.eth.accounts.privateKeyToAccount(PRIVATE_KEY).address;
 
 const main = async () => {
