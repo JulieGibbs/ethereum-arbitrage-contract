@@ -92,6 +92,7 @@ contract UniswapFlash is
             }
         );
         flashPool = IUniswapV3Pool(PoolAddress.computeAddress(factory, poolKey));
+        require(address(flashPool) != address(0), "Invalid flash pool!");
         emit FalshloanInited(loanAssets[0], loanAmounts[0], tradeAssets[0], tradeDexs[0]);
 
         // recipient of borrowed amounts (should be (this) contract)
