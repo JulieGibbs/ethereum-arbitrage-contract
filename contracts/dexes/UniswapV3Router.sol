@@ -2,12 +2,12 @@
 pragma solidity >=0.7.6;
 pragma abicoder v2;
 
-import { ISwapRouter } from "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
-import { TransferHelper } from "@uniswap/v3-periphery/contracts/libraries/TransferHelper.sol";
+import { ISwapRouter } from "../interfaces/ISwapRouter.sol";
+import { TransferHelper } from "../utils/TransferHelper.sol";
 
 contract UniswapV3Router {
     ISwapRouter public uniswapV3Router;
-    event SwapedOnUniswapV3(address indexed _sender, uint256 _amountIn, uint256 _amountOut);
+    event SwapedOnUniswapV3(address indexed _sender, address indexed _assset, uint256 _amountOut);
  
     function uniV3SwapSingle(
         address recipient,
@@ -33,7 +33,7 @@ contract UniswapV3Router {
             })
         );
         require(amountOut > 0, "Swap failed on UniswapV3!");
-        emit SwapedOnUniswapV3(recipient, amountIn, amountOut);
+        emit SwapedOnUniswapV3(recipient, path[1], amountOut);
     }
     
     /// @notice uniswapV3ExactInputTriangular swaps a fixed amount of token1 for a maximum possible amount of token3 through an intermediary pool.
@@ -68,6 +68,6 @@ contract UniswapV3Router {
             })
         );
         require(amountOut > 0, "Swap failed on UniswapV3!");
-        emit SwapedOnUniswapV3(recipient, amountIn, amountOut);
+        emit SwapedOnUniswapV3(recipient, path[1], amountOut);
     }
 }

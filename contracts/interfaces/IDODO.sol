@@ -1,23 +1,40 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.7.6;
 
-interface IDODO {
+interface IDODOV2 {
     function flashLoan(
         uint256 baseAmount,
         uint256 quoteAmount,
         address assetTo,
         bytes calldata data
     ) external;
+    function querySellBase(
+        address trader, 
+        uint256 payBaseAmount
+    ) external view  returns (uint256 receiveQuoteAmount, uint256 mtFee);
 
+    function querySellQuote(
+        address trader, 
+        uint256 payQuoteAmount
+    ) external view  returns (uint256 receiveBaseAmount, uint256 mtFee);
+    
     function _BASE_TOKEN_() external view returns (address);
+
+    function _QUOTE_TOKEN_() external view returns (address);
+}
+interface IDVMFactory {
+    function getDODOPool(
+        address baseToken,
+        address quoteToken
+    ) external view returns (address[] memory pools);
+    function getDODOPoolBidirection(
+        address token0,
+        address token1
+    ) external view returns (address[] memory baseToken0Pool, address[] memory baseToken1Pool);    
 }
 interface IDODOApprove {
     function claimTokens(address token,address who,address dest,uint256 amount) external;
     function getDODOProxy() external view returns (address);
-}
-interface IDODOApproveProxy {
-    function isAllowedProxy(address _proxy) external view returns (bool);
-    function claimTokens(address token,address who,address dest,uint256 amount) external;
 }
 interface IDODOCallee {  
   
@@ -42,29 +59,6 @@ interface IDODOCallee {
         bytes calldata data
     ) external;    
 }
-interface IDODOV1Helper {
-    function querySellQuoteToken(
-        address dodoV1Pool,
-        uint256 quoteAmount
-    ) external view returns (uint256 receivedBaseAmount);
-    function querySellBaseToken(
-        address dodoV1Pool,
-        uint256 baseAmount
-    ) external view returns (uint256 receivedQuoteAmount);
-}
-
-interface IDODOV2 {
-    function querySellBase(
-        address trader, 
-        uint256 payBaseAmount
-    ) external view  returns (uint256 receiveQuoteAmount, uint256 mtFee);
-
-    function querySellQuote(
-        address trader, 
-        uint256 payQuoteAmount
-    ) external view  returns (uint256 receiveBaseAmount, uint256 mtFee);
-}
-
 
 interface IDODOV2Proxy {
     function dodoSwapV1(

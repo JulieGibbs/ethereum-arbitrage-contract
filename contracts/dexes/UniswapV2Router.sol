@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.7.6;
 
-import { IUniswapV2Router02 } from "@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol";
-import { TransferHelper } from "@uniswap/v3-periphery/contracts/libraries/TransferHelper.sol";
+import { IUniswapV2Router02 } from "../interfaces/IUniswapV2Router02.sol";
+import { TransferHelper } from "../utils/TransferHelper.sol";
 
 contract UniswapV2Router {
     IUniswapV2Router02 public uniswapV2Router;
-    event SwapedOnUniswapV2(address indexed _sender, uint256 _amountIn, uint256 _amountOut);
+    event SwapedOnUniswapV2(address indexed _sender, address indexed _assset, uint256 _amountOut);
     function uniV2Swap(
         address recipient,
         address[] memory path,
@@ -14,6 +14,7 @@ contract UniswapV2Router {
         uint256 amountOutMin,
         uint64 deadline
     ) internal returns (uint256 amountOut) {
+        uint256 endIndex = path.length - 1;
         // Approve the router to spend DAI.
         TransferHelper.safeApprove(path[0], address(uniswapV2Router), amountIn);
         amountOut = uniswapV2Router.swapExactTokensForTokens(
@@ -22,8 +23,8 @@ contract UniswapV2Router {
             path,
             recipient,
             deadline
-        )[1];
+        )[endIndex];
         require(amountOut > 0, "Swap failed on UniswapV2!");
-        emit SwapedOnUniswapV2(recipient, amountIn, amountOut);
+        emit SwapedOnUniswapV2(recipient, path[endIndex], amountOut);
     }
 }

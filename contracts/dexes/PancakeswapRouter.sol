@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.7.6;
 
-import { IPancakeRouter02 } from "@bundle-dao/pancakeswap-peripheral/contracts/interfaces/IPancakeRouter02.sol";
-import { TransferHelper } from "@uniswap/v3-periphery/contracts/libraries/TransferHelper.sol";
+import { IPancakeRouter02 } from "../interfaces/IPancakeRouter02.sol";
+import { TransferHelper } from "../utils/TransferHelper.sol";
 
 contract PancakeswapRouter {
     IPancakeRouter02 public pancakeswapRouter;
-    event SwapedOnPancake(address indexed _sender, uint256 _amountIn, uint256 _amountOut);
+    event SwapedOnPancake(address indexed _sender, address indexed _assset, uint256 _amountOut);
     function pancakeSwap(
         address recipient,
         address[] memory path,
@@ -15,6 +15,7 @@ contract PancakeswapRouter {
         uint64 deadline
     ) internal returns (uint256 amountOut) {
         // Approve the router to spend token.
+        uint256 endIndex = path.length - 1;
         TransferHelper.safeApprove(path[0], address(pancakeswapRouter), amountIn);
         amountOut = pancakeswapRouter.swapExactTokensForTokens(
             amountIn,
@@ -22,8 +23,8 @@ contract PancakeswapRouter {
             path,
             recipient,
             deadline
-        )[1];
+        )[endIndex];
         require(amountOut > 0, "Swap failed on Pancakeswap!");
-        emit SwapedOnPancake(recipient, amountIn, amountOut);
+        emit SwapedOnPancake(recipient, path[endIndex], amountOut);
     } 
 }

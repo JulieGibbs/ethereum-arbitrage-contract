@@ -87,13 +87,44 @@ contract SwapAssets is
                 uint64(block.timestamp) + swapRouterInfos[dexId].deadline
             );
         }
-        else if (dexId == PANCAKE_ROUTER_ID) {
+        else if (dexId == PANCAKESWAP_ROUTER_ID) {
             pancakeswapRouter = IPancakeRouter02(swapRouterInfos[dexId].router);
             amountOut = pancakeSwap(
                 recipient,
                 path,
                 amountIn,
                 0,
+                uint64(block.timestamp) + swapRouterInfos[dexId].deadline
+            );
+        }
+        else if (dexId == APESWAP_ROUTER_ID) {
+            uniswapV2Router = IUniswapV2Router02(swapRouterInfos[dexId].router);
+            amountOut = uniV2Swap(
+                recipient,
+                path,
+                amountIn,
+                0,
+                uint64(block.timestamp) + swapRouterInfos[dexId].deadline
+            );
+        }
+        else if (dexId == QUICKSWAP_ROUTER_ID) {
+            uniswapV2Router = IUniswapV2Router02(swapRouterInfos[dexId].router);
+            amountOut = uniV2Swap(
+                recipient,
+                path,
+                amountIn,
+                0,
+                uint64(block.timestamp) + swapRouterInfos[dexId].deadline
+            );
+        }
+        else if (dexId == KYBERSWAP_ROUTER_ID) {
+            uniswapV3Router = ISwapRouter(swapRouterInfos[dexId].router);
+            amountOut = uniV3SwapSingle(
+                recipient,
+                path,
+                amountIn,
+                0,
+                swapRouterInfos[dexId].poolFee,
                 uint64(block.timestamp) + swapRouterInfos[dexId].deadline
             );
         }

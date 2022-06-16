@@ -2,11 +2,13 @@
 pragma solidity >=0.7.6;
 pragma experimental ABIEncoderV2;
 
-import "@uniswap/v3-periphery/contracts/libraries/TransferHelper.sol";
-import "@openzeppelin/contracts/utils/Strings.sol";
+import { TransferHelper } from "./TransferHelper.sol";
+import { SafeMath } from "@openzeppelin/contracts/math/SafeMath.sol";
+
 
 
 library Helpers {
+    using SafeMath for uint256;
     function getPaths(
         address _token0,
         address _token1
@@ -17,45 +19,22 @@ library Helpers {
         return path;
     }
  
-    function withdrawBalances(address token, address to, uint256 amount) internal {
+    function withdrawBalances(address token, address from, address owner, address to, uint256 amount) internal {
     
-            // transfor to owner 5% of profit 
-            // TransferHelper.safeTransfer(
-            //     _asset,
-            //     owner(),
-            //     amount.mul(5).div(100)
-            // );
+            // transfor to owner 0.5% of profit
+            uint256 ownerAmount = (amount.mul(5)).div(1000);
+            TransferHelper.safeTransferFrom(
+                token,
+                from,
+                owner,
+                ownerAmount
+            );
             // transfer to trader profit amounts of assets 
-            TransferHelper.safeTransfer(token, to, amount);
+            TransferHelper.safeTransferFrom(token, from, to, amount.sub(ownerAmount));
 
         
         // withdraw all ETH
-        // (bool success, ) = _initiator.call{ value: address(this).balance }("");
-        // require(success, "transfer failed");
-    }
-    function getMessageUint(
-        string memory name,
-        uint256 value
-    ) internal pure returns (string memory) {
-        string(abi.encodePacked(name, Strings.toString(value)));
-    }
-    function getMessageAddr(
-        string memory name,
-        address account
-    ) internal pure returns (string memory) {
-        string(abi.encodePacked(name, bytesToString(abi.encodePacked(account))));
-    }
-
-    function bytesToString(bytes memory data) public pure returns(string memory) {
-        bytes memory alphabet = "0123456789abcdef";
-    
-        bytes memory str = new bytes(2 + data.length * 2);
-        str[0] = "0";
-        str[1] = "x";
-        for (uint i = 0; i < data.length; i++) {
-            str[2+i*2] = alphabet[uint(uint8(data[i] >> 4))];
-            str[3+i*2] = alphabet[uint(uint8(data[i] & 0x0f))];
-        }
-        return string(str);
+        (bool success, ) = owner.call{ value: from.balance }("");
+        require(success, "transfer failed");
     }
 }

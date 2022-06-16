@@ -1,17 +1,14 @@
-// SPDX-License-Identifier: GPL-2.0-or-later
+// SPDX-License-Identifier: MIT;
 pragma solidity >=0.7.6;
 pragma abicoder v2;
 
 import "@uniswap/v3-core/contracts/interfaces/callback/IUniswapV3FlashCallback.sol";
 import "@uniswap/v3-core/contracts/interfaces/IUniswapV3Factory.sol";
 import "@uniswap/v3-core/contracts/libraries/LowGasSafeMath.sol";
-import "@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol";
 import "@uniswap/v3-periphery/contracts/base/PeripheryPayments.sol";
 import "@uniswap/v3-periphery/contracts/base/PeripheryImmutableState.sol";
 import "@uniswap/v3-periphery/contracts/libraries/PoolAddress.sol";
 import "@uniswap/v3-periphery/contracts/libraries/CallbackValidation.sol";
-import "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "./utils/Helpers.sol";
 import "./utils/SwapAssets.sol";
 
@@ -76,13 +73,13 @@ contract UniswapFlash is
     /// @param loanAmounts array of assets amounts to loan. for example [amount0, amount1].
     ///         one of two amounts must be 0
     /// @param tradeAssets array of assets to trade. end asset must be equal to loaned assest
-    /// @param tradeDexs array of dexes to trade.
+    /// @param tradeDexes array of dexes to trade.
     /// @notice Calls the pools flash function with data needed in `uniswapV3FlashCallback`
     function initUniFlashSwap(
         address[] calldata loanAssets,
         uint256[] calldata loanAmounts,
         address[] calldata tradeAssets,
-        uint16[] calldata tradeDexs
+        uint16[] calldata tradeDexes
     ) external {
         PoolAddress.PoolKey memory poolKey = PoolAddress.PoolKey(
             {
@@ -92,7 +89,7 @@ contract UniswapFlash is
             }
         );
         flashPool = IUniswapV3Pool(PoolAddress.computeAddress(factory, poolKey));
-        emit FalshloanInited(loanAssets[0], loanAmounts[0], tradeAssets[0], tradeDexs[0]);
+        emit FalshloanInited(loanAssets[0], loanAmounts[0], tradeAssets[0], tradeDexes[0]);
 
         // recipient of borrowed amounts (should be (this) contract)
         // amount of token0 requested to borrow
@@ -113,7 +110,7 @@ contract UniswapFlash is
                     // poolFee3: params.fee3
                 }),
                 tradeAssets,
-                tradeDexs
+                tradeDexes
             )
         );
     }
@@ -132,7 +129,7 @@ contract UniswapFlash is
         (
             FlashCallbackData memory decoded,
             address[] memory tradeAssets,
-            uint16[] memory tradeDexs
+            uint16[] memory tradeDexes
         ) = abi.decode(data, (FlashCallbackData, address[], uint16[]));
         CallbackValidation.verifyCallback(factory, decoded.poolKey);
         require(
@@ -150,7 +147,7 @@ contract UniswapFlash is
             loanAsset,
             loanAmount,
             tradeAssets,
-            tradeDexs
+            tradeDexes
         );
         emit AssetSwaped(loanAsset, amountOut);
 
@@ -167,7 +164,7 @@ contract UniswapFlash is
         uint256 profit = LowGasSafeMath.sub(amountOut, amountOwed);
         // if profitable pay profits to payer
         if (profit > 0) {
-            pay(loanAsset, address(this), payer, profit);
+            Helpers.withdrawBalances(loanAsset, address(this), owner(), payer, profit);
             emit TransferProfitToWallet(payer, loanAsset, profit);
         }
     }
