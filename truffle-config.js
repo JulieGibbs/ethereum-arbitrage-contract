@@ -77,7 +77,7 @@ module.exports = {
       provider: new HDWalletProvider(PRIVATE_KEY, "https://mainnet.infura.io/v3/" + INFURA_API_KEY),
       network_id: 1,
       gas: 5000000,
-      gasPrice: 5000000000 // 5 Gwei
+      gasPrice: 30387501023 // 5 Gwei
     },
     // Useful for private networks
     // private: {
