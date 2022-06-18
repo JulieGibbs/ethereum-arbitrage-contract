@@ -10,8 +10,12 @@ module.exports = async (deployer) => {
     const uniV2_router = dexes[network].UniswapV2.Router; // '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D';
     const uniV2_factory = dexes[network].UniswapV2.Factory; // '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f';
     // sushiswap address
-    const sushiV2_router = dexes[network].SushiswapV2.Router; // '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506';
-    const sushiV2_factory = dexes[network].SushiswapV2.Factory; // '0xc35DADB65012eC5796536bD9864eD8773aBc74C4';
+    const sushi_router = dexes[network].Sushiswap.Router; // '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506';
+    const sushi_factory = dexes[network].Sushiswap.Factory; // '0xc35DADB65012eC5796536bD9864eD8773aBc74C4';
+    // shibaswap address
+    const shiba_router = dexes[network].Shibaswap.Router; // '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506';
+    const shiba_factory = dexes[network].Shibaswap.Factory; // '0xc35DADB65012eC5796536bD9864eD8773aBc74C4';
+    
     // token addresses
     const WETH = tokens[network].WETH; // '0xd0A1E359811322d97991E03f863a0C30C2cF029C';
     const DAI = tokens[network].DAI; // '0x4F96Fe3b7A6Cf9725f59d353F723c1bDb64CA6Aa';
@@ -38,12 +42,19 @@ module.exports = async (deployer) => {
     };
     await uniswapFlash.setSwapRouterInfo(2, swapV2RouterInfo);
     const sushiRouterInfo = {
-        router: sushiV2_router,
-        factory: sushiV2_factory,
+        router: sushi_router,
+        factory: sushi_factory,
         poolFee: 3000,
         deadline: 300,
     };
     await uniswapFlash.setSwapRouterInfo(3, sushiRouterInfo);
+    const shibaRouterInfo = {
+        router: shiba_router,
+        factory: shiba_factory,
+        poolFee: 3000,
+        deadline: 300,
+    };
+    await uniswapFlash.setSwapRouterInfo(4, shibaRouterInfo);
 
     // const info = await uniswapFlash.swapRouterInfos(1);
     // console.log("UniswapV3Router ---> ", info.router);
