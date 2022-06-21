@@ -92,6 +92,7 @@
             "Router": "0x325e343f1de602396e256b67efd1f61c3a6b38bd",
             "Factory": "0x86407bea2078ea5f5eb5a52b2caa963bc1f889da"
         },
+        "Biswap": {},
         "DexGuru": {},
         "Dodo": {
             "id": 9,

@@ -10,7 +10,6 @@ import { Helpers } from "./Helpers.sol";
 contract SwapAssets is 
     UniswapV3Router,
     UniswapV2Router,
-    PancakeswapRouter,
     SwapInforRegistry {
 
     function tradeExecute(
@@ -78,36 +77,6 @@ contract SwapAssets is
             );
         }
         else if (dexId == SIBASWAP_ROUTER_ID) {
-            uniswapV2Router = IUniswapV2Router02(swapRouterInfos[dexId].router);
-            amountOut = uniV2Swap(
-                recipient,
-                path,
-                amountIn,
-                0,
-                uint64(block.timestamp) + swapRouterInfos[dexId].deadline
-            );
-        }
-        else if (dexId == PANCAKESWAP_ROUTER_ID) {
-            pancakeswapRouter = IPancakeRouter02(swapRouterInfos[dexId].router);
-            amountOut = pancakeSwap(
-                recipient,
-                path,
-                amountIn,
-                0,
-                uint64(block.timestamp) + swapRouterInfos[dexId].deadline
-            );
-        }
-        else if (dexId == APESWAP_ROUTER_ID) {
-            uniswapV2Router = IUniswapV2Router02(swapRouterInfos[dexId].router);
-            amountOut = uniV2Swap(
-                recipient,
-                path,
-                amountIn,
-                0,
-                uint64(block.timestamp) + swapRouterInfos[dexId].deadline
-            );
-        }
-        else if (dexId == QUICKSWAP_ROUTER_ID) {
             uniswapV2Router = IUniswapV2Router02(swapRouterInfos[dexId].router);
             amountOut = uniV2Swap(
                 recipient,

@@ -17,7 +17,7 @@ contract BalancerswapRouter {
     ) internal returns (uint256 amountOut) {
         // Approve the router to spend token.
         TransferHelper.safeApprove(path[0], address(balancerVault), amountIn);
-        IBalancerVault.SingleSwap memory singleSwap = IBalancerVault.SingleSwap(
+        IBalancerVault.BatchSwapStep memory batchSwap = IBalancerVault.BatchSwapStep(
             {
                 poolId: "",
                 kind: IBalancerVault.SwapKind.GIVEN_IN,

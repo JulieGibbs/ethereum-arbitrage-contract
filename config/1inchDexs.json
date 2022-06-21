@@ -1,0 +1,478 @@
+{
+  "protocols": [
+    {
+      "id": "UNISWAP_V1",
+      "title": "Uniswap V1",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/uniswap.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/uniswap_color.png"
+    },
+    {
+      "id": "UNISWAP_V2",
+      "title": "Uniswap V2",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/uniswap.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/uniswap_color.png"
+    },
+    {
+      "id": "SUSHI",
+      "title": "SushiSwap",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/sushiswap.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/sushiswap_color.png"
+    },
+    {
+      "id": "MOONISWAP",
+      "title": "Mooniswap",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/mooniswap.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/mooniswap_color.png"
+    },
+    {
+      "id": "BALANCER",
+      "title": "Balancer",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/balancer.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/balancer_color.png"
+    },
+    {
+      "id": "COMPOUND",
+      "title": "Compound",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/compound.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/compound_color.png"
+    },
+    {
+      "id": "CURVE",
+      "title": "Curve",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/curve.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/curve_color.png"
+    },
+    {
+      "id": "CURVE_V2_SPELL_2_ASSET",
+      "title": "Curve Spell",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/curve.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/curve_color.png"
+    },
+    {
+      "id": "CURVE_V2_SGT_2_ASSET",
+      "title": "Curve SGT",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/curve.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/curve_color.png"
+    },
+    {
+      "id": "CURVE_V2_THRESHOLDNETWORK_2_ASSET",
+      "title": "Curve Threshold",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/curve.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/curve_color.png"
+    },
+    {
+      "id": "CHAI",
+      "title": "Chai",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/chai.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/chai_color.png"
+    },
+    {
+      "id": "OASIS",
+      "title": "Oasis",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/oasis.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/oasis_color.png"
+    },
+    {
+      "id": "KYBER",
+      "title": "Kyber",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/kyber.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/kyber_color.png"
+    },
+    {
+      "id": "AAVE",
+      "title": "Aave",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/aave.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/aave_color.png"
+    },
+    {
+      "id": "IEARN",
+      "title": "yearn",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/yearn.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/yearn_color.png"
+    },
+    {
+      "id": "BANCOR",
+      "title": "Bancor",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/bancor.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/bancor_color.png"
+    },
+    {
+      "id": "PMM1",
+      "title": "PMM",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/pmm.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/pmm_color.png"
+    },
+    {
+      "id": "CREAMSWAP",
+      "title": "C.R.E.A.M Swap",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/cream.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/cream_color.png"
+    },
+    {
+      "id": "SWERVE",
+      "title": "Swerve",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/swerve.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/swerve_color.png"
+    },
+    {
+      "id": "BLACKHOLESWAP",
+      "title": "BlackholeSwap",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/blackholeswap.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/blackholeswap_color.png"
+    },
+    {
+      "id": "DODO",
+      "title": "DODO",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/dodo.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/dodo_color.png"
+    },
+    {
+      "id": "DODO_V2",
+      "title": "DODO v2",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/dodo.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/dodo_color.png"
+    },
+    {
+      "id": "VALUELIQUID",
+      "title": "Value Liquid",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/valueliquid.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/valueliquid_color.png"
+    },
+    {
+      "id": "SHELL",
+      "title": "Shell",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/shell.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/shell_color.png"
+    },
+    {
+      "id": "DEFISWAP",
+      "title": "DeFi Swap",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/defiswap.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/defiswap_color.png"
+    },
+    {
+      "id": "SAKESWAP",
+      "title": "Sake Swap",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/sakeswap.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/sakeswap_color.png"
+    },
+    {
+      "id": "LUASWAP",
+      "title": "Lua Swap",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/luaswap.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/luaswap_color.png"
+    },
+    {
+      "id": "MINISWAP",
+      "title": "Mini Swap",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/miniswap.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/miniswap_color.png"
+    },
+    {
+      "id": "MSTABLE",
+      "title": "MStable",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/mstable.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/mstable_color.png"
+    },
+    {
+      "id": "PMM2",
+      "title": "PMM2",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/pmm.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/pmm_color.png"
+    },
+    {
+      "id": "SYNTHETIX",
+      "title": "Synthetix",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/synthetix.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/synthetix_color.png"
+    },
+    {
+      "id": "AAVE_V2",
+      "title": "Aave V2",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/aave.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/aave_color.png"
+    },
+    {
+      "id": "ST_ETH",
+      "title": "LiDo",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/steth.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/steth_color.png"
+    },
+    {
+      "id": "ONE_INCH_LP",
+      "title": "1INCH LP v1.0",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/1inch.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/1inch_color.png"
+    },
+    {
+      "id": "ONE_INCH_LP_1_1",
+      "title": "1INCH LP v1.1",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/1inch.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/1inch_color.png"
+    },
+    {
+      "id": "LINKSWAP",
+      "title": "LINKSWAP",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/linkswap.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/linkswap_color.png"
+    },
+    {
+      "id": "S_FINANCE",
+      "title": "sFinance",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/sfinance.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/sfinance_color.png"
+    },
+    {
+      "id": "PSM",
+      "title": "PSM USDC",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/maker.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/maker_color.png"
+    },
+    {
+      "id": "POWERINDEX",
+      "title": "POWERINDEX",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/powerindex.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/powerindex_color.png"
+    },
+    {
+      "id": "PMM3",
+      "title": "PMM3",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/pmm.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/pmm_color.png"
+    },
+    {
+      "id": "XSIGMA",
+      "title": "xSigma",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/xsigma.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/xsigma_color.png"
+    },
+    {
+      "id": "CREAM_LENDING",
+      "title": "C.R.E.A.M Finance",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/cream.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/cream_color.png"
+    },
+    {
+      "id": "SMOOTHY_FINANCE",
+      "title": "Smoothy Finance",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/smoothy.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/smoothy_color.png"
+    },
+    {
+      "id": "SADDLE",
+      "title": "Saddle Finance",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/saddle.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/saddle_color.png"
+    },
+    {
+      "id": "PMM4",
+      "title": "PMM4",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/pmm.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/pmm_color.png"
+    },
+    {
+      "id": "KYBER_DMM",
+      "title": "Kyber DMM",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/kyber.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/kyber_color.png"
+    },
+    {
+      "id": "BALANCER_V2",
+      "title": "Balancer V2",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/balancer.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/balancer_color.png"
+    },
+    {
+      "id": "UNISWAP_V3",
+      "title": "Uniswap V3",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/uniswap.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/uniswap_color.png"
+    },
+    {
+      "id": "SETH_WRAPPER",
+      "title": "sETH Wrapper",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/synthetix.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/synthetix_color.png"
+    },
+    {
+      "id": "CURVE_V2",
+      "title": "Curve V2",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/curve.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/curve_color.png"
+    },
+    {
+      "id": "CURVE_V2_EURS_2_ASSET",
+      "title": "Curve V2 EURS",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/curve.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/curve_color.png"
+    },
+    {
+      "id": "CURVE_V2_EURT_2_ASSET",
+      "title": "Curve V2 EURT",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/curve.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/curve_color.png"
+    },
+    {
+      "id": "CURVE_V2_XAUT_2_ASSET",
+      "title": "Curve V2 XAUt",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/curve.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/curve_color.png"
+    },
+    {
+      "id": "CURVE_V2_ETH_CRV",
+      "title": "Curve V2 ETH CRV",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/curve.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/curve_color.png"
+    },
+    {
+      "id": "CURVE_V2_ETH_CVX",
+      "title": "Curve V2 ETH CVX",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/curve.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/curve_color.png"
+    },
+    {
+      "id": "CONVERGENCE_X",
+      "title": "Convergence X",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/convergence.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/convergence_color.png"
+    },
+    {
+      "id": "ONE_INCH_LIMIT_ORDER",
+      "title": "1inch Limit Order Protocol",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/1inch.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/1inch_color.png"
+    },
+    {
+      "id": "ONE_INCH_LIMIT_ORDER_V2",
+      "title": "1inch Limit Order Protocol V2",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/1inch.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/1inch_color.png"
+    },
+    {
+      "id": "DFX_FINANCE",
+      "title": "DFX Finance",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/dfx.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/dfx_color.png"
+    },
+    {
+      "id": "FIXED_FEE_SWAP",
+      "title": "Fixed Fee Swap",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/1inch.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/1inch_color.png"
+    },
+    {
+      "id": "DXSWAP",
+      "title": "Swapr",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/swapr.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/swapr_color.png"
+    },
+    {
+      "id": "CLIPPER",
+      "title": "Clipper",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/clipper.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/clipper_color.png"
+    },
+    {
+      "id": "SHIBASWAP",
+      "title": "ShibaSwap",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/shiba.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/shiba_color.png"
+    },
+    {
+      "id": "UNIFI",
+      "title": "Unifi",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/unifi.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/unifi_color.png"
+    },
+    {
+      "id": "PSM_PAX",
+      "title": "PSM USDP",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/maker.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/maker_color.png"
+    },
+    {
+      "id": "WSTETH",
+      "title": "wstETH",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/steth.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/steth_color.png"
+    },
+    {
+      "id": "DEFI_PLAZA",
+      "title": "DeFi Plaza",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/defiplaza.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/defiplaza_color.png"
+    },
+    {
+      "id": "FIXED_FEE_SWAP_V3",
+      "title": "Fixed Rate Swap",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/1inch.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/1inch_color.png"
+    },
+    {
+      "id": "SYNTHETIX_WRAPPER",
+      "title": "Wrapped Synthetix",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/synthetix.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/synthetix_color.png"
+    },
+    {
+      "id": "SYNAPSE",
+      "title": "Synapse",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/synapse.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/synapse_color.png"
+    },
+    {
+      "id": "CURVE_V2_YFI_2_ASSET",
+      "title": "Curve Yfi",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/curve.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/curve_color.png"
+    },
+    {
+      "id": "CURVE_V2_ETH_PAL",
+      "title": "Curve V2 ETH Pal",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/curve.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/curve_color.png"
+    },
+    {
+      "id": "POOLTOGETHER",
+      "title": "Pooltogether",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/pooltogether.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/pooltogether_color.png"
+    },
+    {
+      "id": "ETH_BANCOR_V3",
+      "title": "Bancor V3",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/bancor.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/bancor_color.png"
+    },
+    {
+      "id": "ELASTICSWAP",
+      "title": "ElasticSwap",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/elastic_swap.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/elastic_swap_color.png"
+    },
+    {
+      "id": "BALANCER_V2_WRAPPER",
+      "title": "Balancer V2 Aave Wrapper",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/balancer.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/balancer_color.png"
+    },
+    {
+      "id": "SYNTHETIX_ATOMIC",
+      "title": "Synthetix Atomic",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/synthetix.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/synthetix_color.png"
+    },
+    {
+      "id": "FRAXSWAP",
+      "title": "FraxSwap",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/frax_swap.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/frax_swap_color.png"
+    },
+    {
+      "id": "RADIOSHACK",
+      "title": "RadioShack",
+      "img": "https://cdn.1inch.io/liquidity-sources-logo/radioshack.png",
+      "img_color": "https://cdn.1inch.io/liquidity-sources-logo/radioshack_color.png"
+    }
+  ]
+}

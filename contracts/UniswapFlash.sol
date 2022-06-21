@@ -165,7 +165,7 @@ contract UniswapFlash is
         uint256 profit = LowGasSafeMath.sub(amountOut, amountOwed);
         // if profitable pay profits to payer
         if (profit > 0) {
-            Helpers.withdrawBalances(loanAsset, address(this), owner(), payer, profit);
+            pay(loanAsset, address(this), payer, profit);
             emit TransferProfitToWallet(payer, loanAsset, profit);
         }
     }
