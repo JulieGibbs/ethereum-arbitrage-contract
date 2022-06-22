@@ -25,7 +25,8 @@ contract SwapInforRegistry is Ownable {
     uint16 public constant QUICKSWAP_ROUTER_ID = 10;
     uint16 public constant BALANCERSWAP_ROUTER_ID = 11;
     uint16 public constant BABYSWAP_ROUTER_ID = 12;
-
+    uint16 public constant MOONISWAP_ROUTER_ID = 13;
+    uint16 public constant BANCOR_V3_ROUTER_ID = 14;
     mapping(uint16 => SwapRouterInfo) public swapRouterInfos;
     event RouterInfoSeted(
         uint16 _index,

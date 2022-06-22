@@ -19,7 +19,7 @@ contract DodoswapRouter {
    
     IDODOV2Proxy public dodoswapProxy;
     address public dodoApprove;
-    IDVMFactory public dppFactory;
+    IDVMFactory public dvmFactory;
     event SwapedOnDodo(address indexed _sender, address indexed _assset, uint256 _amountOut);
 
     function dodoSwapV2(
@@ -34,7 +34,7 @@ contract DodoswapRouter {
         // address toToken = 0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c; //BSC WBNB
         // uint256 fromTokenAmount = 1e18; //sellBaseAmount
         // uint256 slippage = 1;
-
+        require(dodoApprove != address(0), "Invalid Dodo Approve!");
         /*
             Note: (only used for DODOV2 pool)
             Users can estimate prices before spending gas. Include two situations
@@ -48,7 +48,7 @@ contract DodoswapRouter {
         // IERC20(fromToken).transferFrom(msg.sender, address(this), fromTokenAmount);
         // (uint256 receivedQuoteAmount,) = IDODOV2(dodoV2Pool).querySellBase(msg.sender, fromTokenAmount);
         // uint256 minReturnAmount = receivedQuoteAmount.mul(100 - slippage).div(100);
-        address dodoV2Pool = dppFactory.getDODOPool(path[0], path[1])[0];
+        address dodoV2Pool = dvmFactory.getDODOPool(path[0], path[1])[0];
         address[] memory dodoPairs = new address[](1); //one-hop
         dodoPairs[0] = dodoV2Pool;
         
@@ -68,7 +68,7 @@ contract DodoswapRouter {
             Heco DODOApprove: 0x68b6c06Ac8Aa359868393724d25D871921E97293
             Arbitrum DODOApprove: 0xA867241cDC8d3b0C07C85cC06F25a0cD3b5474d8
         */
-        dodoApprove = 0xCB859eA579b28e02B87A1FDE08d087ab9dbE5149;
+        // dodoApprove = 0xCB859eA579b28e02B87A1FDE08d087ab9dbE5149;
         // _generalApproveMax(path[0], dodoApprove, amountIn);
         TransferHelper.safeApprove(path[0], dodoApprove, amountIn);
 
@@ -94,5 +94,8 @@ contract DodoswapRouter {
         );
         TransferHelper.safeTransfer(path[1], recipient, amountOut);
         emit SwapedOnDodo(recipient, path[1], amountOut);
+    }
+    function setDodoApprove(address _dodoApprove) external {
+        dodoApprove = _dodoApprove;
     }
 }
