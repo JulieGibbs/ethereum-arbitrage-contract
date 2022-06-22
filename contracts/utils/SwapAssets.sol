@@ -111,17 +111,17 @@ contract SwapAssets is
                 uint64(block.timestamp) + swapRouterInfos[dexId].deadline
             );
         }
-        else if (dexId == BALANCERSWAP_ROUTER_ID) {
-            balancerVault = IBalancerVault(swapRouterInfos[dexId].router);
-            amountOut = balancerSingleSwap(
-                recipient,
-                path,
-                amountIn,
-                0,
-                swapRouterInfos[dexId].poolFee,
-                uint64(block.timestamp) + swapRouterInfos[dexId].deadline
-            );
-        }
+        // else if (dexId == BALANCERSWAP_ROUTER_ID) {
+        //     balancerVault = IBalancerVault(swapRouterInfos[dexId].router);
+        //     amountOut = balancerSingleSwap(
+        //         recipient,
+        //         path,
+        //         amountIn,
+        //         0,
+        //         swapRouterInfos[dexId].poolFee,
+        //         uint64(block.timestamp) + swapRouterInfos[dexId].deadline
+        //     );
+        // }
         else if (dexId == BANCOR_V3_ROUTER_ID) {
             bancorNetwork = IBancorNetwork(swapRouterInfos[dexId].router);
             amountOut = bancorV3Swap(
