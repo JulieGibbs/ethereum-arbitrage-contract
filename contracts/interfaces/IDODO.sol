@@ -60,7 +60,7 @@ interface IDODOCallee {
     ) external;    
 }
 
-interface IDODOV2Proxy {
+interface IDODOProxy {
     function dodoSwapV1(
         address fromToken,
         address toToken,

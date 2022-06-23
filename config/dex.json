@@ -27,7 +27,7 @@
             "Factory": "0x5F1dddbf348aC2fbe22a163e30F99F9ECE3DD50a",
             "Quoter": "0x0D125c15D54cA1F8a813C74A81aEe34ebB508C1f"
         },
-        "Dodo": {
+        "DodoV2": {
             "id": 9,
             "Proxy": "0xa356867fDCEa8e71AEaF87805808803806231FdC",
             "Factory": "0x72d220cE168C4f361dD4deE5D826a01AD8598f6C"
@@ -53,7 +53,8 @@
         "AnySwap": {},
         "Bancor": {
             "id": 14,
-            "network": "0xeEF417e1D5CC832e619ae18D2F140De2999dD4fB"
+            "Network": "0xeEF417e1D5CC832e619ae18D2F140De2999dD4fB",
+            "NetworkInfo": "0x8E303D296851B320e6a697bAcB979d13c9D6E760"
         },
         "Curve": {},
         "IDEX": {},
@@ -109,7 +110,11 @@
         },
         
         "Ellipsis": {},
-        "IDEX": {},
+        "MDEX": {
+            "id": "",
+            "Router": "0x7DAe51BD3E3376B8c7c4900E9107f12Be3AF1bA8",
+            "Factory": "0x3CD1C46068dAEa5Ebb0d3f55F6915B10648062B8"
+        },
         "JulSwap": {
             "id": "",
             "Router": "0xbd67d157502A23309Db761c41965600c2Ec788b2",

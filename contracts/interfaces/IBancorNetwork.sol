@@ -29,3 +29,10 @@ interface IFlashLoanRecipient {
         bytes memory data
     ) external;
 }
+interface IBancorNetworkInfo {
+    function tradeOutputBySourceAmount(
+        Token sourceToken,
+        Token targetToken,
+        uint256 sourceAmount
+    ) external view returns (uint256);
+}

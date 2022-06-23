@@ -100,7 +100,7 @@ contract SwapAssets is
             );
         }
         else if (dexId == DODOSWAP_ROUTER_ID) {
-            dodoswapProxy = IDODOV2Proxy(swapRouterInfos[dexId].router);
+            dodoswapProxy = IDODOProxy(swapRouterInfos[dexId].router);
             dvmFactory = IDVMFactory(swapRouterInfos[dexId].factory);
             amountOut = dodoSwapV2(
                 recipient,
