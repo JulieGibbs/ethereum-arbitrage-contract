@@ -16,15 +16,15 @@ contract MooniswapRouter {
     ) internal returns (uint256 amountOut) {
         uint256 endIndex = path.length - 1;
         // Approve the router to spend DAI.
-        TransferHelper.safeApprove(path[0], address(uniswapV2Router), amountIn);
-        amountOut = uniswapV2Router.swapExactTokensForTokens(
+        TransferHelper.safeApprove(path[0], address(mooniFactory), amountIn);
+        amountOut = mooniFactory.swap(
+            path[0],
+            path[1],
             amountIn,
             amountOutMin,
-            path,
-            recipient,
-            deadline
-        )[endIndex];
-        require(amountOut > 0, "Swap failed on UniswapV2!");
+            recipient
+        );
+        require(amountOut > 0, "Swap failed on MooniV1!");
         emit SwapedOnMooniV1(recipient, path[endIndex], amountOut);
     }
 }

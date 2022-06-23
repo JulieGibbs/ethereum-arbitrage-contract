@@ -4,7 +4,7 @@ pragma abicoder v2;
 import { IBalancerVault } from "../interfaces/IBalancerVault.sol";
 import { TransferHelper } from "../utils/TransferHelper.sol";
 
-contract BalancerswapRouter {
+contract BalancerRouter {
     IBalancerVault public balancerVault;
     
     event SwapedOnBalancer(address indexed _sender,  address indexed _assset, uint256 _amountOut);

@@ -4,7 +4,7 @@ pragma solidity >=0.7.6;
 import { IPancakeRouter02 } from "../interfaces/IPancakeRouter02.sol";
 import { TransferHelper } from "../utils/TransferHelper.sol";
 
-contract PancakeswapRouter {
+contract PancakeSwapRouter {
     IPancakeRouter02 public pancakeswapRouter;
     event SwapedOnPancake(address indexed _sender, address indexed _assset, uint256 _amountOut);
     function pancakeSwap(

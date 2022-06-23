@@ -1,13 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.7.6;
-pragma experimental ABIEncoderV2;
 
 import { TransferHelper } from "./TransferHelper.sol";
 import { SafeMath } from "@openzeppelin/contracts/math/SafeMath.sol";
-import { PaymentSplit } from "./PaymentSplit.sol";
 
 
-library Helpers is PaymentSplit {
+library Helpers {
     using SafeMath for uint256;
     function getPaths(
         address _token0,

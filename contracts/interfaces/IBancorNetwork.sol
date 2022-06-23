@@ -31,8 +31,8 @@ interface IFlashLoanRecipient {
 }
 interface IBancorNetworkInfo {
     function tradeOutputBySourceAmount(
-        Token sourceToken,
-        Token targetToken,
+        address sourceToken,
+        address targetToken,
         uint256 sourceAmount
     ) external view returns (uint256);
 }

@@ -40,4 +40,11 @@ interface IBalancerVault {
         int256[] memory limits,
         uint256 deadline
     ) external payable returns (int256[] memory);
+
+    function queryBatchSwap(
+        SwapKind kind,
+        BatchSwapStep[] memory swaps,
+        address[] memory assets,
+        FundManagement memory funds
+    ) external returns (int256[] memory assetDeltas);
 }

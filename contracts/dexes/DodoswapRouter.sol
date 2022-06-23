@@ -15,7 +15,7 @@ import { TransferHelper } from "../utils/TransferHelper.sol";
     - mixSwap: Used for executing DODO’s custom aggregation algorithm
     Note: Best Trading path is calculated by off-chain program. DODOProxy's swap functions is only used for executing.
 */
-contract DodoswapRouter {
+contract DodoSwapRouter {
    
     IDODOProxy public dodoProxy;
     IDODOApprove public dodoApprove;
