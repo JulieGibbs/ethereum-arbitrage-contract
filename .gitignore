@@ -6,3 +6,4 @@ bot
 .env
 test
 yarn-error.log
+output.json
