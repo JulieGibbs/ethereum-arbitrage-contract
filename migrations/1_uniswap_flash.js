@@ -22,7 +22,7 @@ module.exports = async (deployer) => {
     // set pool fee
     await uniswapFlash.setFlashPoolFee(500);
     // set swap router infos for dexes
-    console.log("seting router infos...");
+    console.log("setting router infos...");
     const uniV3RouterInfo = {
         router: uniV3_router,
         factory: uniV3_factory,
