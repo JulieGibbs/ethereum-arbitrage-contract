@@ -7,7 +7,7 @@ pragma abicoder v2;
 /// @notice For each pool also tells you the number of initialized ticks crossed and the sqrt price of the pool after the swap.
 /// @dev These functions are not marked view because they rely on calling non-view functions and reverting
 /// to compute the result. They are also not gas efficient and should not be called on-chain.
-interface IQuoterV2 {
+interface IKyberQuoterV2 {
   struct QuoteOutput {
     uint256 usedAmount;
     uint256 returnedAmount;

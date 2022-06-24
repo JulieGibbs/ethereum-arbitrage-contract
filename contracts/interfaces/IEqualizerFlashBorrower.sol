@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.7.6;
-interface IERC3156FlashBorrower {
+interface IEqualizerFlashBorrower {
     /**
      * @dev Receive a flash loan.
      * @param initiator The initiator of the loan.

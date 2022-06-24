@@ -5,11 +5,17 @@ pragma abicoder v2;
 import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 
 contract SwapInforRegistry is Ownable {
+    enum DexSeries {
+        UniswapV3,
+        UniswapV2,
+        Other
+    }
     struct SwapRouterInfo {
         address router;
         address factory;
         uint24 poolFee;    //  3000
-        uint64 deadline;    //  300 ~ 600
+        uint64 deadline;  //  300 ~ 600
+        DexSeries series;   // 0 = uniswapV2, 1 = UniswapV3, 2 = other
     }
   
     // swap router id constants
@@ -27,6 +33,7 @@ contract SwapInforRegistry is Ownable {
     uint16 public constant BABYSWAP_ROUTER_ID = 12;
     uint16 public constant MOONISWAP_ROUTER_ID = 13;
     uint16 public constant BANCOR_V3_ROUTER_ID = 14;
+    uint16 public constant DEFISWAP_ROUTER_ID = 15;
     mapping(uint16 => SwapRouterInfo) public swapRouterInfos;
     event RouterInfoSeted(
         uint16 _index,

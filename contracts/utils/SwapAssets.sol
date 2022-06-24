@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.7.6;
 pragma abicoder v2;
-import { UniswapV3Router, ISwapRouter } from "../dexes/UniswapV3Router.sol";
+import { UniswapV3Router, IUniswapV3Router } from "../dexes/UniswapV3Router.sol";
 import { UniswapV2Router, IUniswapV2Router02 } from "../dexes/UniswapV2Router.sol";
 import { DodoSwapRouter, IDODOProxy, IDVMFactory } from "../dexes/DodoSwapRouter.sol";
 import { BalancerRouter, IBalancerVault } from "../dexes/BalancerRouter.sol";
 import { BancorV3Router, IBancorNetwork } from "../dexes/BancorV3Router.sol";
+import { KyberSwapRouter, IKyberRouter } from "../dexes/KyberSwapRouter.sol";
 import { SwapInforRegistry } from "./SwapInforRegistry.sol";
 import { Helpers } from "./Helpers.sol";
 
@@ -15,6 +16,7 @@ contract SwapAssets is
     DodoSwapRouter,
     BalancerRouter,
     BancorV3Router,
+    KyberSwapRouter,
     SwapInforRegistry {
 
     function tradeExecute(
@@ -52,8 +54,8 @@ contract SwapAssets is
         uint256 amountIn,
         uint16 dexId
     ) internal returns (uint256 amountOut){
-        if (dexId == UNISWAP_V3_ROUTER_ID) {
-            uniswapV3Router = ISwapRouter(swapRouterInfos[dexId].router);
+        if (swapRouterInfos[dexId].series == DexSeries.UniswapV3) {
+            uniswapV3Router = IUniswapV3Router(swapRouterInfos[dexId].router);
             amountOut = uniV3SwapSingle(
                 recipient,
                 path,
@@ -62,26 +64,7 @@ contract SwapAssets is
                 swapRouterInfos[dexId].poolFee,
                 uint64(block.timestamp) + swapRouterInfos[dexId].deadline
             );
-        } else if (dexId == UNISWAP_V2_ROUTER_ID) {
-            uniswapV2Router = IUniswapV2Router02(swapRouterInfos[dexId].router);
-            amountOut = uniV2Swap(
-                recipient,
-                path,
-                amountIn,
-                0,
-                uint64(block.timestamp) + swapRouterInfos[dexId].deadline
-            );
-        } else if (dexId == SUSHISWAP_ROUTER_ID) {
-            uniswapV2Router = IUniswapV2Router02(swapRouterInfos[dexId].router);
-            amountOut = uniV2Swap(
-                recipient,
-                path,
-                amountIn,
-                0,
-                uint64(block.timestamp) + swapRouterInfos[dexId].deadline
-            );
-        }
-        else if (dexId == SIBASWAP_ROUTER_ID) {
+        } else if (swapRouterInfos[dexId].series == DexSeries.UniswapV2) {
             uniswapV2Router = IUniswapV2Router02(swapRouterInfos[dexId].router);
             amountOut = uniV2Swap(
                 recipient,
@@ -92,8 +75,8 @@ contract SwapAssets is
             );
         }
         else if (dexId == KYBERSWAP_ROUTER_ID) {
-            uniswapV3Router = ISwapRouter(swapRouterInfos[dexId].router);
-            amountOut = uniV3SwapSingle(
+            kyberSwapRouter = IKyberRouter(swapRouterInfos[dexId].router);
+            amountOut = kyberSwapSingle(
                 recipient,
                 path,
                 amountIn,
