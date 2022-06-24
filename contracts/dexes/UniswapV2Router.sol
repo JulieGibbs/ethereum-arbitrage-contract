@@ -14,7 +14,7 @@ contract UniswapV2Router {
         uint256 amountOutMin,
         uint64 deadline
     ) internal returns (uint256 amountOut) {
-        // Approve the router to spend DAI.
+        // Approve the router to spend token.
         TransferHelper.safeApprove(path[0], address(uniswapV2Router), amountIn);
         amountOut = uniswapV2Router.swapExactTokensForTokens(
             amountIn,
@@ -22,7 +22,7 @@ contract UniswapV2Router {
             path,
             recipient,
             deadline
-        )[1];
+        )[path.length - 1];
         require(amountOut > 0, "Swap failed on UniswapV2!");
         emit SwapedOnUniswapV2(recipient, amountIn, amountOut);
     }

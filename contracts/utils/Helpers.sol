@@ -16,21 +16,5 @@ library Helpers {
         path[1] = _token1;
         return path;
     }
- 
-    function withdrawBalances(address token, address to, uint256 amount) internal {
-    
-            // transfor to owner 5% of profit 
-            // TransferHelper.safeTransfer(
-            //     _asset,
-            //     owner(),
-            //     amount.mul(5).div(100)
-            // );
-            // transfer to trader profit amounts of assets 
-            TransferHelper.safeTransfer(token, to, amount);
 
-        
-        // withdraw all ETH
-        // (bool success, ) = _initiator.call{ value: address(this).balance }("");
-        // require(success, "transfer failed");
-    }
 }
