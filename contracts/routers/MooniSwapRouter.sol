@@ -4,7 +4,7 @@ pragma solidity >=0.7.6;
 import { IMooniFactory } from "../interfaces/IMooniFactory.sol";
 import { TransferHelper } from "../utils/TransferHelper.sol";
 
-contract MooniswapRouter {
+contract MooniSwapRouter {
     IMooniFactory public mooniFactory;
     event SwapedOnMooniV1(address indexed _sender, address indexed _assset, uint256 _amountOut);
     function mooniV1Swap(

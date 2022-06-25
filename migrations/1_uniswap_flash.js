@@ -1,7 +1,9 @@
+require('dotenv').config();
 const UniswapFlash = artifacts.require("UniswapFlash");
 const dexes = require("../config/dex.json");
 const tokens = require("../config/token.json");
-const network = 'Mainnet';
+const network = process.env.NET_ENV.toLowerCase() || '';
+console.log(network);
 module.exports = async (deployer) => {
     // uniswapV3 addresses
     const uniV3_router = dexes[network].UniSwapV3.Router; // '0xE592427A0AEce92De3Edee1F18E0157C05861564';
@@ -13,9 +15,11 @@ module.exports = async (deployer) => {
     const sushi_router = dexes[network].SushiSwap.Router; // '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506';
     const sushi_factory = dexes[network].SushiSwap.Factory; // '0xc35DADB65012eC5796536bD9864eD8773aBc74C4';
     // shibaswap address
-    const shiba_router = dexes[network].ShibaSwap.Router; // '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506';
-    const shiba_factory = dexes[network].ShibaSwap.Factory; // '0xc35DADB65012eC5796536bD9864eD8773aBc74C4';
-    
+    let shiba_router, shiba_factory;
+    if (network == 'mainnet') {
+        shiba_router = dexes[network].ShibaSwap.Router; // '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506';
+        shiba_factory = dexes[network].ShibaSwap.Factory; // '0xc35DADB65012eC5796536bD9864eD8773aBc74C4';
+    }
     // token addresses
     const WETH = tokens[network].WETH; // '0xd0A1E359811322d97991E03f863a0C30C2cF029C';
     const DAI = tokens[network].DAI; // '0x4F96Fe3b7A6Cf9725f59d353F723c1bDb64CA6Aa';
@@ -48,14 +52,15 @@ module.exports = async (deployer) => {
         deadline: 300,
     };
     await uniswapFlash.setSwapRouterInfo(3, sushiRouterInfo);
-    const shibaRouterInfo = {
-        router: shiba_router,
-        factory: shiba_factory,
-        poolFee: 3000,
-        deadline: 300,
-    };
-    await uniswapFlash.setSwapRouterInfo(4, shibaRouterInfo);
-
+    if (network == 'mainnet') {
+        const shibaRouterInfo = {
+            router: shiba_router,
+            factory: shiba_factory,
+            poolFee: 3000,
+            deadline: 300,
+        };
+        await uniswapFlash.setSwapRouterInfo(4, shibaRouterInfo);
+    }
     // const info = await uniswapFlash.swapRouterInfos(1);
     // console.log("UniswapV3Router ---> ", info.router);
     console.log("finished setup router infos!");

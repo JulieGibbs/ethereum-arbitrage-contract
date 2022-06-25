@@ -1,13 +1,18 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.7.6;
 
-interface IDODOV2 {
+interface IDODO {
     function flashLoan(
         uint256 baseAmount,
         uint256 quoteAmount,
         address assetTo,
         bytes calldata data
     ) external;
+
+    function _BASE_TOKEN_() external view returns (address);
+    function _QUOTE_TOKEN_() external view returns (address);
+}
+interface IDODOV2 {
     function querySellBase(
         address trader, 
         uint256 payBaseAmount
@@ -22,7 +27,7 @@ interface IDODOV2 {
 
     function _QUOTE_TOKEN_() external view returns (address);
 }
-interface IDVMFactory {
+interface IDODOFactory {
     function getDODOPool(
         address baseToken,
         address quoteToken
@@ -31,6 +36,16 @@ interface IDVMFactory {
         address token0,
         address token1
     ) external view returns (address[] memory baseToken0Pool, address[] memory baseToken1Pool);    
+}
+interface IDCPFactory {
+    function getCrowdPooling(address baseToken, address quoteToken)
+    external
+    view
+    returns (address[] memory pools);
+    function getCrowdPoolingBidirection(address token0, address token1)
+    external
+    view
+    returns (address[] memory baseToken0Pools, address[] memory baseToken1Pools)
 }
 interface IDODOApprove {
     function claimTokens(address token,address who,address dest,uint256 amount) external;

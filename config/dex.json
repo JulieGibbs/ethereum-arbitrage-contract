@@ -1,5 +1,5 @@
 {
-    "Mainnet": {
+    "mainnet": {
         "UniSwapV2": {
             "id": 2,
             "Router": "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
@@ -27,10 +27,25 @@
             "Factory": "0x5F1dddbf348aC2fbe22a163e30F99F9ECE3DD50a",
             "Quoter": "0x0D125c15D54cA1F8a813C74A81aEe34ebB508C1f"
         },
-        "DodoV2": {
+        "DodoV2DVM": {
             "id": 9,
             "Proxy": "0xa356867fDCEa8e71AEaF87805808803806231FdC",
-            "Factory": "0x72d220cE168C4f361dD4deE5D826a01AD8598f6C"
+            "DVM": "0x72d220cE168C4f361dD4deE5D826a01AD8598f6C"
+        },
+        "DodoV2DPP": {
+            "id": 9,
+            "Proxy": "0xa356867fDCEa8e71AEaF87805808803806231FdC",
+            "DPP": "0x5336edE8F971339F6c0e304c66ba16F1296A2Fbe"
+        },
+        "DodoV2DSP": {
+            "id": 9,
+            "Proxy": "0xa356867fDCEa8e71AEaF87805808803806231FdC",
+            "DSP": "0x6fdDB76c93299D985f4d3FC7ac468F9A168577A4"
+        },
+        "DodoV2DCP": {
+            "id": 9,
+            "Proxy": "0xa356867fDCEa8e71AEaF87805808803806231FdC",
+            "DCP": "0xE8C9A78725D0451FA19878D5f8A3dC0D55FECF25"
         },
         "Balancer": {
             "id": 11,
@@ -58,15 +73,15 @@
         "AnySwap": {},
         "Bancor": {
             "id": 14,
-            "Network": "0xeEF417e1D5CC832e619ae18D2F140De2999dD4fB",
-            "NetworkInfo": "0x8E303D296851B320e6a697bAcB979d13c9D6E760"
+            "Router": "0xeEF417e1D5CC832e619ae18D2F140De2999dD4fB",
+            "Quoter": "0x8E303D296851B320e6a697bAcB979d13c9D6E760"
         },
         "Curve": {},
         "IDEX": {},
         "Paraswap": {},
         "Synapse": {}
     },
-    "Kovan": {
+    "kovan": {
         "UniSwapV2": {
             "id": 2,
             "Router": "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
@@ -90,7 +105,7 @@
         }
         
     },
-    "Binance": {
+    "binance": {
         "1inch": {},
         "AnySwap": {},
         "ApeSwap": {
@@ -137,7 +152,7 @@
         "ParaSwap": {},
         "SushiSwap": {}
     },
-    "Polygon": {
+    "polygon": {
         "1inch": {},
         "Apeswap": {
             "id": 6,
@@ -164,14 +179,14 @@
         "Slingshot": {},
         "Sushiswap": {}
     },
-    "Arbitrum": {
+    "arbitrum": {
         "1inch": {},
         "Curve": {},
         "Slingshot": {},
         "Sushiswap": {},
         "Uniswap": {}
     },
-    "Avalanche": {
+    "avalanche": {
         "DexGuru": {},
         "Kyber": {},
         "Paraswap": {},

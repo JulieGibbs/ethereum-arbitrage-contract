@@ -4,7 +4,7 @@ pragma solidity >=0.7.6;
 import { ICurveFi } from "../interfaces/ICurveFi.sol";
 import { TransferHelper } from "../utils/TransferHelper.sol";
 
-contract CurveswapRouter {
+contract CurveSwapRouter {
 
     ICurveFi public curveRouter;
     event SwapedOnCurve(address indexed _sender,  address indexed _assset, uint256 _amountOut);

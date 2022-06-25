@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.7.6;
 
-import { IBancorNetwork } from "../interfaces/IBancorNetwork.sol";
+import { IBancorNetwork } from "../interfaces/IBancorV3Router.sol";
 import { TransferHelper } from "../utils/TransferHelper.sol";
 
 contract BancorV3Router {

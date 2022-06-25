@@ -4,7 +4,7 @@ pragma solidity >=0.7.6;
 import { IParaswap, ITokenTransferProxy } from "../interfaces/IParaswap.sol";
 import { TransferHelper } from "../utils/TransferHelper.sol";
 
-contract PancakeswapRouter {
+contract ParaSwapRouter {
     IParaswap public paraswap;
     event SwapedOnParaswap(address indexed _sender, address indexed _assset, uint256 _amountOut);
     function paraSwap(

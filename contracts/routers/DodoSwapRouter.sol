@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.7.6;
 
-import { IDODOV2, IDODOApprove, IDODOProxy, IDVMFactory} from "../interfaces/IDODO.sol";
+import { IDODOV2, IDODOApprove, IDODOProxy, IDODOFactory} from "../interfaces/IDODO.sol";
 import { TransferHelper } from "../utils/TransferHelper.sol";
 
 /*
@@ -19,7 +19,7 @@ contract DodoSwapRouter {
    
     IDODOProxy public dodoProxy;
     IDODOApprove public dodoApprove;
-    IDVMFactory public dvmFactory;
+    IDODOFactory public dodoFactory;
     event SwapedOnDodoV1(address indexed _sender, address indexed _assset, uint256 _amountOut);
     event SwapedOnDodoV2(address indexed _sender, address indexed _assset, uint256 _amountOut);
     function dodoSwapV2(
@@ -42,7 +42,7 @@ contract DodoSwapRouter {
         */
 
         // (uint256 receivedQuoteAmount,) = IDODOV2(dodoV2Pool).querySellBase(msg.sender, fromTokenAmount);
-        address dodoV2Pool = dvmFactory.getDODOPool(path[0], path[1])[0];
+        address dodoV2Pool = dodoFactory.getDODOPool(path[0], path[1])[0];
         address[] memory dodoPairs = new address[](1); //one-hop
         dodoPairs[0] = dodoV2Pool;
         

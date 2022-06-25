@@ -29,6 +29,9 @@ const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || "";
 if (!INFURA_API_KEY) {
   throw new Error("Please set your INFURA_API_KEY in a .env file");
 }
+if (!PRIVATE_KEY) {
+  throw new Error("Please set your PRIVATE_KEY in a .env file");
+}
 module.exports = {
   /**
    * Networks define how you connect to your ethereum client and let you set the

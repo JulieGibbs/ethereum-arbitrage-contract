@@ -9,58 +9,20 @@ import "@uniswap/v3-periphery/contracts/base/PeripheryPayments.sol";
 import "@uniswap/v3-periphery/contracts/base/PeripheryImmutableState.sol";
 import "@uniswap/v3-periphery/contracts/libraries/PoolAddress.sol";
 import "@uniswap/v3-periphery/contracts/libraries/CallbackValidation.sol";
-import "./utils/SwapAssets.sol";
-
+import "../../utils/SwapAssets.sol";
+import "../interfaces/IUniswapFlash.sol";
 /// @title Flash contract implementation
-/// @notice An example contract using the Uniswap V3 flash function
+/// @notice contract using the Uniswap V3 flash function
 contract UniswapFlash is 
+    IUniswapFlash,
     IUniswapV3FlashCallback,
     PeripheryImmutableState,
     PeripheryPayments,
     SwapAssets {
     
-
-    // fee2 and fee3 are the two other fees associated with the two other pools of token0 and token1
-    struct FlashCallbackData {
-        uint256 amount0;
-        uint256 amount1;
-        address payer;
-        PoolAddress.PoolKey poolKey;
-        // uint24 poolFee2;
-        // uint24 poolFee3;
-    }
-
     using LowGasSafeMath for uint256;
     IUniswapV3Pool public flashPool;
     uint24 public flashPoolFee;  //  flash from the 0.05% fee of pool
-
-    event FalshloanInited(
-        address indexed _loanAsset,
-        uint256 _loanAmount,
-        address indexed _tradeAsset,
-        uint16 _tradeDex
-    );
-    event AssetBorrowedFromPool(
-        address indexed _pool,
-        address indexed _loanAsset,
-        uint256 _loanAmount,
-        uint256 _fee
-    );
-    event AssetSwaped(
-        address indexed _swapAsset,
-        uint256 _swapAmount
-    );
-    event RepayedAssetToPool(
-        address indexed _pool,
-        address indexed _repayedAsset,
-        uint256 _repayedAmount
-    );
-    event TransferProfitToWallet(
-        address indexed _owner,
-        address indexed _profitAsset,
-        uint256 _profitAmount
-    );
-    event ChangedFlashPoolFee(address indexed _sender, uint24 _fee);
     constructor(
         address _factory,
         address _WETH9
