@@ -8,11 +8,17 @@ contract MooniAdapter {
         address tokenIn, 
         address tokenOut, 
         uint256 amountIn
-    ) external view returns (uint256 amountOut) {
-        amountOut = IMooniFactory(mooniQuoter).getReturn(
+    ) public view returns (uint256 amountOut) {
+        try IMooniFactory(mooniQuoter).getReturn(
             tokenIn, 
             tokenOut, 
             amountIn
-        );
+        ) returns (uint256 output)
+        {
+            amountOut = output;
+        } catch {
+            amountOut = 0;
+
+        }
     }
 }

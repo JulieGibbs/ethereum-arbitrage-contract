@@ -11,27 +11,42 @@ contract DodoV2Adapter {
         address tokenIn, 
         address tokenOut, 
         uint256 amountIn
-    ) external view returns (uint256 amountOut) {
-        address[] memory dodoV2Pool = IDODOFactory(dodoV2Quoter).getDODOPool(tokenIn, tokenOut);
-        for (uint i; i < dodoV2Pool.length; i++) {
-            uint quoteAmount = tokenIn == IDODOV2(dodoV2Pool)._BASE_TOKEN_()
-                ? IDODOV2(dodoV2Pool).querySellBase(tokenIn, amountIn)
-                : IDODOV2(dodoV2Pool).querySellQuote(tokenIn, amountIn);
-            if (quoteAmount >= amountOut) amountOut = quoteAmount;
+    ) public view returns (uint256 amountOut) {
+        try IDODOFactory(dodoV2Quoter).getDODOPool(
+            tokenIn, 
+            tokenOut
+        ) returns (address[] memory dodoV2Pools)
+        {
+            for (uint i; i < dodoV2Pools.length; i++) {
+                (uint256 quoteAmount,) = tokenIn == IDODOV2(dodoV2Pools[i])._BASE_TOKEN_()
+                    ? IDODOV2(dodoV2Pools[i]).querySellBase(tokenIn, amountIn)
+                    : IDODOV2(dodoV2Pools[i]).querySellQuote(tokenIn, amountIn);
+                if (quoteAmount >= amountOut) amountOut = quoteAmount;
+            }
+        } catch {
+            amountOut = 0;
         }
+        
     }
     function getPriceOnDodoV2DCP(
         address dodoDCPQuoter,
         address tokenIn, 
         address tokenOut, 
         uint256 amountIn
-    ) external view returns (uint256 amountOut) {
-        address[] memory dodoV2Pool = IDCPFactory(dodoDCPQuoter).getCrowdPooling(tokenIn, tokenOut);
-        for (uint i; i < dodoV2Pool.length; i++) {
-            uint quoteAmount = tokenIn == IDODOV2(dodoV2Pool)._BASE_TOKEN_()
-                ? IDODOV2(dodoV2Pool).querySellBase(tokenIn, amountIn)
-                : IDODOV2(dodoV2Pool).querySellQuote(tokenIn, amountIn);
-            if (quoteAmount >= amountOut) amountOut = quoteAmount;
+    ) public view returns (uint256 amountOut) {
+        try IDCPFactory(dodoDCPQuoter).getCrowdPooling(
+            tokenIn, 
+            tokenOut
+        ) returns (address[] memory dodoV2Pools)
+        {
+            for (uint i; i < dodoV2Pools.length; i++) {
+                (uint256 quoteAmount,) = tokenIn == IDODOV2(dodoV2Pools[i])._BASE_TOKEN_()
+                    ? IDODOV2(dodoV2Pools[i]).querySellBase(tokenIn, amountIn)
+                    : IDODOV2(dodoV2Pools[i]).querySellQuote(tokenIn, amountIn);
+                if (quoteAmount >= amountOut) amountOut = quoteAmount;
+            }
+        } catch {
+            amountOut = 0;
         }
     }
 }

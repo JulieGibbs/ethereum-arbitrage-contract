@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.7.6;
+pragma experimental ABIEncoderV2;
 import { IQuoter } from "../../interfaces/IUniswapV3Router.sol";
 import { Helpers } from "../../utils/Helpers.sol";
 
@@ -10,10 +11,16 @@ contract UniV3Adapter {
         address tokenIn, 
         address tokenOut, 
         uint256 amountIn
-    ) external view returns (uint256 amountOut) {
-        amountOut = IQuoter(uniV3Quoter).quoteExactInput(
-            Helpers.getPaths(tokenIn, tokenOut),
+    ) public returns (uint256 amountOut) {
+        uint24 poolFee = 3000;
+        try IQuoter(uniV3Quoter).quoteExactInput(
+            abi.encodePacked(tokenIn, poolFee, tokenOut),
             amountIn
-        );
+        ) returns (uint256 output)
+        {
+            amountOut = output;
+        } catch {
+            amountOut = 0;
+        }
     }
 }

@@ -10,6 +10,7 @@ import "@uniswap/v3-periphery/contracts/base/PeripheryImmutableState.sol";
 import "@uniswap/v3-periphery/contracts/libraries/PoolAddress.sol";
 import "@uniswap/v3-periphery/contracts/libraries/CallbackValidation.sol";
 import "../../utils/SwapAssets.sol";
+import "../../utils/ReentrancyGuard.sol";
 import "../interfaces/IUniswapFlash.sol";
 /// @title Flash contract implementation
 /// @notice contract using the Uniswap V3 flash function
@@ -18,8 +19,16 @@ contract UniswapFlash is
     IUniswapV3FlashCallback,
     PeripheryImmutableState,
     PeripheryPayments,
-    SwapAssets {
-    
+    SwapAssets,
+    ReentrancyGuard {
+    struct FlashCallbackData {
+        uint256 amount0;
+        uint256 amount1;
+        address payer;
+        PoolAddress.PoolKey poolKey;
+        // uint24 poolFee2;
+        // uint24 poolFee3;
+    }
     using LowGasSafeMath for uint256;
     IUniswapV3Pool public flashPool;
     uint24 public flashPoolFee;  //  flash from the 0.05% fee of pool
@@ -41,7 +50,7 @@ contract UniswapFlash is
         uint256[] calldata loanAmounts,
         address[] calldata tradeAssets,
         uint16[] calldata tradeDexes
-    ) external {
+    ) external override nonReentrant {
         PoolAddress.PoolKey memory poolKey = PoolAddress.PoolKey(
             {
                 token0: loanAssets[0],

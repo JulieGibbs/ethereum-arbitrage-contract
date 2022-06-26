@@ -7,11 +7,16 @@ contract BancorV3Adapter {
         address tokenIn, 
         address tokenOut, 
         uint256 amountIn
-    ) external view returns (uint256 amountOut) {
-        amountOut = IBancorNetworkInfo(bancorV3Quoter).tradeOutputBySourceAmount(
+    ) public view returns (uint256 amountOut) {
+        try IBancorNetworkInfo(bancorV3Quoter).tradeOutputBySourceAmount(
             tokenIn, 
             tokenOut, 
             amountIn
-        );
+        ) returns (uint256 output)
+        {
+            amountOut = output;
+        } catch {
+            amountOut = 0;
+        }
     }
 }

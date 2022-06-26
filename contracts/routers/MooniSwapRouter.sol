@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.7.6;
 
-import { IMooniFactory } from "../interfaces/IMooniFactory.sol";
+import { IMooniFactory } from "../interfaces/IMooniRouter.sol";
 import { TransferHelper } from "../utils/TransferHelper.sol";
 
 contract MooniSwapRouter {

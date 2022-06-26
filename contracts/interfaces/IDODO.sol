@@ -45,7 +45,7 @@ interface IDCPFactory {
     function getCrowdPoolingBidirection(address token0, address token1)
     external
     view
-    returns (address[] memory baseToken0Pools, address[] memory baseToken1Pools)
+    returns (address[] memory baseToken0Pools, address[] memory baseToken1Pools);
 }
 interface IDODOApprove {
     function claimTokens(address token,address who,address dest,uint256 amount) external;

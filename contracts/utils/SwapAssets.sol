@@ -7,7 +7,7 @@ import { DodoSwapRouter, IDODOProxy, IDODOFactory } from "../routers/DodoSwapRou
 import { BalancerRouter, IBalancerVault } from "../routers/BalancerRouter.sol";
 import { BancorV3Router, IBancorNetwork } from "../routers/BancorV3Router.sol";
 import { KyberSwapRouter, IKyberRouter } from "../routers/KyberSwapRouter.sol";
-import { RouterInforRegistry } from "./RouterInforRegistry.sol";
+import { RouterRegistry } from "./RouterRegistry.sol";
 import { Helpers } from "./Helpers.sol";
 
 contract SwapAssets is 
@@ -17,7 +17,7 @@ contract SwapAssets is
     BalancerRouter,
     BancorV3Router,
     KyberSwapRouter,
-    RouterInforRegistry {
+    RouterRegistry {
 
     function tradeExecute(
         address recipient,
@@ -97,22 +97,22 @@ contract SwapAssets is
                 uint64(block.timestamp) + routerInfos[dexId].deadline
             );
         }
-        else if (dexId == DODOSWAP_ROUTER_ID) {
-            if (address(dodoProxy) == address(0) 
-                || address(dodoProxy) !=  routerInfos[dexId].router
-            ) {
-                dodoProxy = IDODOProxy(routerInfos[dexId].router);
-            }
+        // else if (dexId == DODODVM_ROUTER_ID) {
+        //     if (address(dodoProxy) == address(0) 
+        //         || address(dodoProxy) !=  routerInfos[dexId].router
+        //     ) {
+        //         dodoProxy = IDODOProxy(routerInfos[dexId].router);
+        //     }
             
-            dodoFactory = IDODOFactory(routerInfos[dexId].factory);
-            amountOut = dodoSwapV2(
-                recipient,
-                path,
-                amountIn,
-                0,
-                uint64(block.timestamp) + routerInfos[dexId].deadline
-            );
-        }
+        //     dodoFactory = IDODOFactory(routerInfos[dexId].factory);
+        //     amountOut = dodoSwapV2(
+        //         recipient,
+        //         path,
+        //         amountIn,
+        //         0,
+        //         uint64(block.timestamp) + routerInfos[dexId].deadline
+        //     );
+        // }
         // else if (dexId == BALANCERSWAP_ROUTER_ID) {
         //     balancerVault = IBalancerVault(routerInfos[dexId].router);
         //     amountOut = balancerSingleSwap(

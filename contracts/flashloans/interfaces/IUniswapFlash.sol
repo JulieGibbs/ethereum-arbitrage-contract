@@ -1,16 +1,7 @@
 // SPDX-License-Identifier: MIT;
 pragma solidity >=0.7.6;
-
 interface IUniswapFlash {
-    struct FlashCallbackData {
-        uint256 amount0;
-        uint256 amount1;
-        address payer;
-        PoolAddress.PoolKey poolKey;
-        // uint24 poolFee2;
-        // uint24 poolFee3;
-    }
-    mapping(uint16 => RouterInfo) public routerInfos;
+    
     event FalshloanInited(
         address indexed _loanAsset,
         uint256 _loanAmount,

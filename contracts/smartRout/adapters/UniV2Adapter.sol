@@ -13,11 +13,16 @@ contract UniV2Adapter {
         address tokenIn, 
         address tokenOut, 
         uint256 amountIn
-    ) external view returns (uint256 amountOut) {
+    ) public view returns (uint256 amountOut) {
         address[] memory path = Helpers.getPaths(tokenIn, tokenOut);
-        amountOut = IUniswapV2Router02(uniV2quoter).getAmountsOut(
+        try IUniswapV2Router02(uniV2quoter).getAmountsOut(
             amountIn, 
             path
-        )[path.length - 1];
+        ) returns (uint256[] memory output)
+        {
+            amountOut = output[path.length - 1];
+        } catch {
+            amountOut = 0;
+        }
     }
 }
