@@ -2,7 +2,7 @@
 pragma solidity >=0.7.6;
 
 import { TransferHelper } from "./TransferHelper.sol";
-import { SafeMath } from "@openzeppelin/contracts/math/SafeMath.sol";
+import { SafeMath } from "./SafeMath.sol";
 
 
 library Helpers {
@@ -16,7 +16,9 @@ library Helpers {
         path[1] = _token1;
         return path;
     }
- 
+    function getSelector(string memory _functionName) internal pure returns (bytes4) {
+        return bytes4(keccak256(bytes(_functionName)));
+    }
     function withdraw(address token) internal {
     
         //     // transfor to owner 0.5% of profit

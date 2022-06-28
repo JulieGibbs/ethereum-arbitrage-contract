@@ -59,21 +59,21 @@ module.exports = {
       provider: new HDWalletProvider(PRIVATE_KEY, "https://ropsten.infura.io/v3/" + INFURA_API_KEY),
       network_id: 3,
       gas: 5000000,
-    gasPrice: 5000000000, // 5 Gwei
-    skipDryRun: true
+      gasPrice: 5000000000, // 5 Gwei
+      skipDryRun: true
     },
     rinkeby: {
       provider: new HDWalletProvider(PRIVATE_KEY, "https://rinkeby.infura.io/v3/" + INFURA_API_KEY),
       network_id: 4,
       gas: 5000000,
-    gasPrice: 5000000000, // 5 Gwei
-    skipDryRun: true
+      gasPrice: 5000000000, // 5 Gwei
+      skipDryRun: true
     },
     kovan: {
       provider: new HDWalletProvider(PRIVATE_KEY, "https://kovan.infura.io/v3/" + INFURA_API_KEY),
       network_id: 42,
-      gas: 5000000,
-    gasPrice: 5000000000, // 5 Gwei
+      gas: 30000000,
+      gasPrice: 5000000000, // 5 Gwei
     skipDryRun: true
     },
     mainnet: {
@@ -103,7 +103,7 @@ module.exports = {
       // settings: {          // See the solidity docs for advice about optimization and evmVersion
        optimizer: {
          enabled: false,
-         runs: 200
+         runs: 100
        },
       //  evmVersion: "byzantium"
       // }

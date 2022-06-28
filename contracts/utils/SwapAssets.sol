@@ -1,12 +1,15 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.7.6;
 pragma abicoder v2;
-import { UniswapV3Router, IUniswapV3Router } from "../routers/UniswapV3Router.sol";
-import { UniswapV2Router, IUniswapV2Router02 } from "../routers/UniswapV2Router.sol";
+import { UniswapV3Router } from "../routers/UniswapV3Router.sol";
+import { UniswapV2Router } from "../routers/UniswapV2Router.sol";
 import { DodoSwapRouter, IDODOProxy, IDODOFactory } from "../routers/DodoSwapRouter.sol";
-import { BalancerRouter, IBalancerVault } from "../routers/BalancerRouter.sol";
-import { BancorV3Router, IBancorNetwork } from "../routers/BancorV3Router.sol";
-import { KyberSwapRouter, IKyberRouter } from "../routers/KyberSwapRouter.sol";
+// import { BalancerRouter } from "../routers/BalancerRouter.sol";
+import { BancorRouter } from "../routers/BancorRouter.sol";
+import { KyberSwapRouter } from "../routers/KyberSwapRouter.sol";
+import { MooniSwapRouter } from "../routers/MooniSwapRouter.sol";
+import { OneinchRouter } from "../routers/OneinchRouter.sol";
+import { RouterConstant } from "./RouterConstant.sol";
 import { RouterRegistry } from "./RouterRegistry.sol";
 import { Helpers } from "./Helpers.sol";
 
@@ -14,11 +17,14 @@ contract SwapAssets is
     UniswapV3Router,
     UniswapV2Router,
     DodoSwapRouter,
-    BalancerRouter,
-    BancorV3Router,
+    // BalancerRouter,
+    BancorRouter,
+    OneinchRouter,
     KyberSwapRouter,
-    RouterRegistry {
-
+    MooniSwapRouter,
+    RouterRegistry,
+    RouterConstant {
+   
     function tradeExecute(
         address recipient,
         address loanedAssest,
@@ -26,12 +32,7 @@ contract SwapAssets is
         address[] memory tradeAssets,
         uint16[] memory tradeDexes
     ) internal returns (uint256 amountOut){
-        require(loanedAmount > 0, "loaned amount is 0");
-        require(tradeDexes.length == tradeAssets.length, "Invalid trade params");
-        require(
-            tradeAssets[tradeAssets.length - 1] == loanedAssest,
-            "end trade assest must be equal to loaned assest"
-        );
+        
         amountOut = swapAsset(
             recipient,
             Helpers.getPaths(loanedAssest, tradeAssets[0]),
@@ -54,88 +55,86 @@ contract SwapAssets is
         uint256 amountIn,
         uint16 dexId
     ) internal returns (uint256 amountOut){
-        if (routerInfos[dexId].series == DexSeries.UniswapV3) {
-            if (address(uniswapV3Router) == address(0) 
-                || address(uniswapV3Router) !=  routerInfos[dexId].router
-            ) {
-                uniswapV3Router = IUniswapV3Router(routerInfos[dexId].router);
-            }
+        RouterInfo memory routerInfo = routerInfos[dexId];
+        if (routerInfo.series == DexSeries.UniswapV3) {
+            
             amountOut = uniV3SwapSingle(
                 recipient,
+                routerInfo.router,
                 path,
                 amountIn,
                 0,
-                routerInfos[dexId].poolFee,
-                uint64(block.timestamp) + routerInfos[dexId].deadline
+                routerInfo.poolFee,
+                uint64(block.timestamp) + routerInfo.deadline
             );
-        } else if (routerInfos[dexId].series == DexSeries.UniswapV2) {
-            if (address(uniswapV2Router) == address(0) 
-                || address(uniswapV2Router) !=  routerInfos[dexId].router
-            ) {
-                uniswapV3Router = IUniswapV3Router(routerInfos[dexId].router);
-            }
+            
+            
+        } else if (routerInfo.series == DexSeries.UniswapV2) {
+           
             amountOut = uniV2Swap(
                 recipient,
+                routerInfo.router,
                 path,
                 amountIn,
                 0,
-                uint64(block.timestamp) + routerInfos[dexId].deadline
+                uint64(block.timestamp) + routerInfo.deadline
             );
         }
-        else if (dexId == KYBERSWAP_ROUTER_ID) {
-            if (address(kyberSwapRouter) == address(0) 
-                || address(kyberSwapRouter) !=  routerInfos[dexId].router
-            ) {
-                kyberSwapRouter = IKyberRouter(routerInfos[dexId].router);
-            }
-            amountOut = kyberSwapSingle(
-                recipient,
-                path,
-                amountIn,
-                0,
-                routerInfos[dexId].poolFee,
-                uint64(block.timestamp) + routerInfos[dexId].deadline
-            );
-        }
-        // else if (dexId == DODODVM_ROUTER_ID) {
-        //     if (address(dodoProxy) == address(0) 
-        //         || address(dodoProxy) !=  routerInfos[dexId].router
-        //     ) {
-        //         dodoProxy = IDODOProxy(routerInfos[dexId].router);
-        //     }
+        else if (dexId == KYBERSWAP_V3_ROUTER_ID) {
             
-        //     dodoFactory = IDODOFactory(routerInfos[dexId].factory);
-        //     amountOut = dodoSwapV2(
-        //         recipient,
-        //         path,
-        //         amountIn,
-        //         0,
-        //         uint64(block.timestamp) + routerInfos[dexId].deadline
-        //     );
-        // }
-        // else if (dexId == BALANCERSWAP_ROUTER_ID) {
-        //     balancerVault = IBalancerVault(routerInfos[dexId].router);
-        //     amountOut = balancerSingleSwap(
-        //         recipient,
-        //         path,
-        //         amountIn,
-        //         0,
-        //         uint64(block.timestamp) + routerInfos[dexId].deadline
-        //     );
-        // }
+            amountOut = kyberV3Swap(
+                recipient,
+                routerInfo.router,
+                path,
+                amountIn,
+                0,
+                routerInfo.poolFee,
+                uint64(block.timestamp) + routerInfo.deadline
+            );
+        }
+        else if (dexId == KYBERSWAP_V2_ROUTER_ID) {
+            
+            amountOut = kyberV2Swap(
+                recipient,
+                routerInfo.router,
+                path,
+                amountIn,
+                0,
+                routerInfo.poolFee
+            );
+        }
+        else if (dexId == ONEINCHI_V4_ROUTER_ID) {
+            
+            amountOut = oneinchV4Swap(
+                recipient,
+                routerInfo.router,
+                routerInfo.quoter,
+                path,
+                amountIn,
+                0
+            );
+        }
+        else if (dexId == MOONISWAP_ROUTER_ID) {
+            amountOut = mooniV1Swap(
+                recipient,
+                routerInfo.router,
+                path,
+                amountIn,
+                0
+            );
+        }
         else if (dexId == BANCOR_V3_ROUTER_ID) {
-            if (address(bancorNetwork) == address(0) 
-                || address(bancorNetwork) !=  routerInfos[dexId].router
-            ) {
-                bancorNetwork = IBancorNetwork(routerInfos[dexId].router);
-            }
+           
             amountOut = bancorV3Swap(
                 recipient,
+                routerInfo.router,
                 path,
                 amountIn,
                 0,
-                uint64(block.timestamp) + routerInfos[dexId].deadline
+                uint64(block.timestamp) + routerInfo.deadline
             );
         }
     }
+
+    
 }

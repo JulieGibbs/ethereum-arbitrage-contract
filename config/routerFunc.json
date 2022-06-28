@@ -1,0 +1,26 @@
+{
+    "UniSwapV2": {
+        "SwapFunc": "swapExactTokensForTokens(uint256,uint256,address[] calldata,address,uint256)",
+        "QuoteFunc": "getAmountsOut(uint256,address[] memory)"
+    },
+    "UniSwapV3": {
+        "SwapFunc": "exactInputSingle(ExactInputSingleParams calldata)",
+        "QuoteFunc": "quoteExactInput(bytes memory,uint256)"
+    },
+    "DodoV2": {
+        "SwapFunc": "dodoSwapV2TokenToToken(address,address,uint256,uint256,address[] memory,uint256,bool,uint256)",
+        "QuoteFunc": "querySellBase(address,uint256)"
+    },
+    "BancorV3": {
+        "SwapFunc": "tradeBySourceAmount(address,address,uint256,uint256,uint256,address)",
+        "QuoteFunc": "tradeOutputBySourceAmount(address,address,uint256)"
+    },
+    "MooniSwap": {
+        "SwapFunc": "swap(address,address,uint256,uint256,address)",
+        "QuoteFunc": "getReturn(address,address,uint256)"
+    },
+    "KyberSwap": {
+        "SwapFunc": "swapExactInputSingle(ExactInputSingleParams calldata)",
+        "QuoteFunc": "quoteExactInput(bytes memory,uint256)"
+    }
+}

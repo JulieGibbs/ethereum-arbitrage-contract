@@ -21,63 +21,77 @@
             "Router": "0x03f7724180AA6b939894B5Ca4314783B0b36b329",
             "Factory": "0x115934131916C8b277DD010Ee02de363c09d037c"
         },
-        "Kyber": {
+        "DefiSwap": {
+            "id":"5",
+            "Router": "0xCeB90E4C17d626BE0fACd78b79c9c87d7ca181b3",
+            "Factory": "0x9DEB29c9a4c7A88a3C0257393b7f3335338D9A9D"
+        },
+        "Bancor": {
+            "id": 6,
+            "Router": "0xeEF417e1D5CC832e619ae18D2F140De2999dD4fB",
+            "Quoter": "0x8E303D296851B320e6a697bAcB979d13c9D6E760"
+        },
+        "Balancer": {
             "id": 7,
-            "Router": "0xC1e7dFE73E1598E3910EF4C7845B68A9Ab6F4c83",
-            "Factory": "0x5F1dddbf348aC2fbe22a163e30F99F9ECE3DD50a",
-            "Quoter": "0x0D125c15D54cA1F8a813C74A81aEe34ebB508C1f"
+            "Vault": "0xBA12222222228d8Ba445958a75a0704d566BF2C8"
         },
         "DodoV2DVM": {
-            "id": 9,
+            "id": 8,
             "Proxy": "0xa356867fDCEa8e71AEaF87805808803806231FdC",
-            "DVM": "0x72d220cE168C4f361dD4deE5D826a01AD8598f6C"
+            "Factory": "0x72d220cE168C4f361dD4deE5D826a01AD8598f6C",
+            "Approve": "0xCB859eA579b28e02B87A1FDE08d087ab9dbE5149"
         },
         "DodoV2DPP": {
             "id": 9,
             "Proxy": "0xa356867fDCEa8e71AEaF87805808803806231FdC",
-            "DPP": "0x5336edE8F971339F6c0e304c66ba16F1296A2Fbe"
+            "Factory": "0x5336edE8F971339F6c0e304c66ba16F1296A2Fbe",
+            "Approve": "0xCB859eA579b28e02B87A1FDE08d087ab9dbE5149"
         },
         "DodoV2DSP": {
-            "id": 9,
+            "id": 10,
             "Proxy": "0xa356867fDCEa8e71AEaF87805808803806231FdC",
-            "DSP": "0x6fdDB76c93299D985f4d3FC7ac468F9A168577A4"
+            "Factory": "0x6fdDB76c93299D985f4d3FC7ac468F9A168577A4",
+            "Approve": "0xCB859eA579b28e02B87A1FDE08d087ab9dbE5149"
         },
         "DodoV2DCP": {
-            "id": 9,
-            "Proxy": "0xa356867fDCEa8e71AEaF87805808803806231FdC",
-            "DCP": "0xE8C9A78725D0451FA19878D5f8A3dC0D55FECF25"
-        },
-        "Balancer": {
             "id": 11,
-            "Vault": "0xBA12222222228d8Ba445958a75a0704d566BF2C8"
-        },
-        "DefiSwap": {
-            "id":"15",
-            "Router": "0xCeB90E4C17d626BE0fACd78b79c9c87d7ca181b3",
-            "Factory": "0x9DEB29c9a4c7A88a3C0257393b7f3335338D9A9D"
-        },
-        "Dydx": {
-
-        },
-        "1inch": {
-
-        },
-        "DexGuru":{
-
+            "Proxy": "0xa356867fDCEa8e71AEaF87805808803806231FdC",
+            "Factory": "0xE8C9A78725D0451FA19878D5f8A3dC0D55FECF25",
+            "Approve": "0xCB859eA579b28e02B87A1FDE08d087ab9dbE5149"
         },
         "MooniSwap": {
-            "id": 13,
+            "id": 12,
             "Factory": "0x71CD6666064C3A1354a3B4dca5fA1E2D3ee7D303"
-
         },
-        "AnySwap": {},
-        "Bancor": {
+        "KyberSwapV3": {
+            "id": 13,
+            "Router": "0xC1e7dFE73E1598E3910EF4C7845B68A9Ab6F4c83",
+            "Factory": "0x5F1dddbf348aC2fbe22a163e30F99F9ECE3DD50a",
+            "Quoter": "0x0D125c15D54cA1F8a813C74A81aEe34ebB508C1f"
+        },
+        "KyberSwapV2": {
             "id": 14,
-            "Router": "0xeEF417e1D5CC832e619ae18D2F140De2999dD4fB",
-            "Quoter": "0x8E303D296851B320e6a697bAcB979d13c9D6E760"
+            "Router": "0x1Af8772AC277FE590a0Bde36da607100221A9622",
+            "Factory": "0x5F1dddbf348aC2fbe22a163e30F99F9ECE3DD50a"
         },
+        "1inchV4": {
+            "id": 15,
+            "Router": "0x1111111254fb6c44bAC0beD2854e76F90643097d"
+        },
+        "1inchV3": {
+            "id": 16,
+            "Router": "0x11111112542d85b3ef69ae05771c2dccff4faa26"
+        },
+        "1inchV2": {
+            "id": 17,
+            "Router": "0x111111125434b319222cdbf8c261674adb56f3ae"
+        },
+        
+        "AnySwap": {},
+        
         "Curve": {},
         "IDEX": {},
+        
         "Paraswap": {},
         "Synapse": {}
     },
@@ -95,11 +109,6 @@
         },
         "SushiSwap": {
             "id": 3,
-            "Router": "0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506",
-            "Factory": "0xc35DADB65012eC5796536bD9864eD8773aBc74C4"
-        },
-        "ShibaSwap": {
-            "id": 4,
             "Router": "0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506",
             "Factory": "0xc35DADB65012eC5796536bD9864eD8773aBc74C4"
         }
@@ -146,7 +155,7 @@
             "Router": "0xbd67d157502A23309Db761c41965600c2Ec788b2",
             "Factory": "0x553990F2CBA90272390f62C5BDb1681fFc899675"
         },
-        "Kyber": {},
+        "KyberSwap": {},
         "Matcha": {},
         "PancakeSwap": {},
         "ParaSwap": {},
@@ -172,7 +181,7 @@
         },
         "IDEX": {},
         "Jellyswap": {},
-        "Kyber": {},
+        "KyberSwap": {},
         "Matcha": {},
         "Paraswap": {},
         "Quickswap": {},

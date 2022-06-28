@@ -11,11 +11,9 @@ import "@uniswap/v3-periphery/contracts/libraries/PoolAddress.sol";
 import "@uniswap/v3-periphery/contracts/libraries/CallbackValidation.sol";
 import "../../utils/SwapAssets.sol";
 import "../../utils/ReentrancyGuard.sol";
-import "../interfaces/IUniswapFlash.sol";
 /// @title Flash contract implementation
 /// @notice contract using the Uniswap V3 flash function
 contract UniswapFlash is 
-    IUniswapFlash,
     IUniswapV3FlashCallback,
     PeripheryImmutableState,
     PeripheryPayments,
@@ -50,7 +48,7 @@ contract UniswapFlash is
         uint256[] calldata loanAmounts,
         address[] calldata tradeAssets,
         uint16[] calldata tradeDexes
-    ) external override nonReentrant {
+    ) external nonReentrant {
         PoolAddress.PoolKey memory poolKey = PoolAddress.PoolKey(
             {
                 token0: loanAssets[0],
@@ -60,13 +58,7 @@ contract UniswapFlash is
         );
         flashPool = IUniswapV3Pool(PoolAddress.computeAddress(factory, poolKey));
         require(address(flashPool) != address(0), "Invalid flash pool!");
-        emit FalshloanInited(loanAssets[0], loanAmounts[0], tradeAssets[0], tradeDexes[0]);
 
-        // recipient of borrowed amounts (should be (this) contract)
-        // amount of token0 requested to borrow
-        // amount of token1 requested to borrow
-        // need amount 0 and amount1 in callback to pay back pool
-        // recipient of flash should be THIS contract
         flashPool.flash(
             address(this),
             loanAmounts[0],
@@ -77,8 +69,6 @@ contract UniswapFlash is
                     amount1: loanAmounts[1],
                     payer: msg.sender,
                     poolKey: poolKey
-                    // poolFee2: params.fee2,
-                    // poolFee3: params.fee3
                 }),
                 tradeAssets,
                 tradeDexes
@@ -111,7 +101,6 @@ contract UniswapFlash is
         uint256 loanAmount = decoded.amount0 > 0 ? decoded.amount0: decoded.amount1;
         uint256 fee = decoded.amount0 > 0 ? fee0 : fee1;
         address payer = decoded.payer;
-        emit AssetBorrowedFromPool(msg.sender, loanAsset, loanAmount, fee);
         // start trade
         uint256 amountOut = tradeExecute(
             address(this),
@@ -120,7 +109,6 @@ contract UniswapFlash is
             tradeAssets,
             tradeDexes
         );
-        emit AssetSwaped(loanAsset, amountOut);
 
         // compute amount to pay back to pool 
         // loanAmount + fee
@@ -130,18 +118,15 @@ contract UniswapFlash is
         // note: msg.sender == pool to pay back 
         if (amountOwed > 0) {
             pay(loanAsset, address(this), msg.sender, amountOwed);
-            emit RepayedAssetToPool(msg.sender, loanAsset, amountOwed);
         }
         uint256 profit = LowGasSafeMath.sub(amountOut, amountOwed);
         // if profitable pay profits to payer
         if (profit > 0) {
             pay(loanAsset, address(this), payer, profit);
-            emit TransferProfitToWallet(payer, loanAsset, profit);
         }
     }
     function setFlashPoolFee(uint24 poolFee) public onlyOwner() {
         flashPoolFee = poolFee;
-        emit ChangedFlashPoolFee(msg.sender, poolFee);
     }
     fallback() external payable {}
 }
