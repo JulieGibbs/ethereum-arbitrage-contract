@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.7.6;
-pragma abicoder v2;
+pragma experimental ABIEncoderV2;
 import { UniswapV3Router } from "../routers/UniswapV3Router.sol";
 import { UniswapV2Router } from "../routers/UniswapV2Router.sol";
 import { DodoSwapRouter, IDODOProxy, IDODOFactory } from "../routers/DodoSwapRouter.sol";

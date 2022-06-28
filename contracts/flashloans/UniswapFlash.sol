@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT;
 pragma solidity >=0.7.6;
-pragma abicoder v2;
+pragma experimental ABIEncoderV2;
 
 import "@uniswap/v3-core/contracts/interfaces/callback/IUniswapV3FlashCallback.sol";
 import "@uniswap/v3-core/contracts/interfaces/IUniswapV3Factory.sol";
@@ -9,8 +9,8 @@ import "@uniswap/v3-periphery/contracts/base/PeripheryPayments.sol";
 import "@uniswap/v3-periphery/contracts/base/PeripheryImmutableState.sol";
 import "@uniswap/v3-periphery/contracts/libraries/PoolAddress.sol";
 import "@uniswap/v3-periphery/contracts/libraries/CallbackValidation.sol";
-import "../../utils/SwapAssets.sol";
-import "../../utils/ReentrancyGuard.sol";
+import "../utils/SwapAssets.sol";
+import "../utils/ReentrancyGuard.sol";
 /// @title Flash contract implementation
 /// @notice contract using the Uniswap V3 flash function
 contract UniswapFlash is 

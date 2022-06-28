@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.7.6;
-pragma abicoder v2;
+pragma experimental ABIEncoderV2;
 
 import { IUniswapV3Router } from "../interfaces/IUniswapV3Router.sol";
 import { TransferHelper } from "../utils/TransferHelper.sol";
