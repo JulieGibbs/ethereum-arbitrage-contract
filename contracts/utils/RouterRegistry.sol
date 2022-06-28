@@ -14,8 +14,8 @@ contract RouterRegistry is Ownable {
         address router;
         address quoter;
         address factory;
+        uint256 deadline;  //  300 ~ 600
         uint24 poolFee;    //  3000
-        uint64 deadline;  //  300 ~ 600
         DexSeries series;   // 0 = other, 1 = UniswapV3, 2 = UniswapV2, 3 = DodoV2
     }
   

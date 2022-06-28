@@ -12,7 +12,7 @@ contract UniswapV2Router {
         address[] memory path,
         uint256 amountIn,
         uint256 amountOutMin,
-        uint64 deadline
+        uint256 deadline
     ) internal returns (uint256 amountOut) {
         uniV2Selector = IUniswapV2Router02.swapExactTokensForTokens.selector;
         uint256 endIndex = path.length - 1;

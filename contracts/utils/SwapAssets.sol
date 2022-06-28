@@ -64,8 +64,8 @@ contract SwapAssets is
                 path,
                 amountIn,
                 0,
-                routerInfo.poolFee,
-                uint64(block.timestamp) + routerInfo.deadline
+                block.timestamp + routerInfo.deadline,
+                routerInfo.poolFee
             );
             
             
@@ -77,7 +77,7 @@ contract SwapAssets is
                 path,
                 amountIn,
                 0,
-                uint64(block.timestamp) + routerInfo.deadline
+                block.timestamp + routerInfo.deadline
             );
         }
         else if (dexId == KYBERSWAP_V3_ROUTER_ID) {
@@ -88,8 +88,8 @@ contract SwapAssets is
                 path,
                 amountIn,
                 0,
-                routerInfo.poolFee,
-                uint64(block.timestamp) + routerInfo.deadline
+                block.timestamp + routerInfo.deadline,
+                routerInfo.poolFee
             );
         }
         else if (dexId == KYBERSWAP_V2_ROUTER_ID) {
@@ -131,7 +131,7 @@ contract SwapAssets is
                 path,
                 amountIn,
                 0,
-                uint64(block.timestamp) + routerInfo.deadline
+                block.timestamp + routerInfo.deadline
             );
         }
     }

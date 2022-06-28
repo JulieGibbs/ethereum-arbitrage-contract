@@ -27,7 +27,7 @@ contract DodoSwapRouter {
         address[] memory path,
         uint256 amountIn,
         uint256 amountOutMin,
-        uint64 deadline
+        uint256 deadline
     ) internal returns (uint256 amountOut) {
         
         require(address(dodoApprove) != address(0), "Invalid Dodo Approve!");

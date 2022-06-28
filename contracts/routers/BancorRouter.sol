@@ -11,7 +11,7 @@ contract BancorRouter {
         address[] memory path,
         uint256 amountIn,
         uint256 amountOutMin,
-        uint64 deadline
+        uint256 deadline
     ) internal returns (uint256 amountOut) {
         // Approve the router to spend DAI.
         TransferHelper.safeApprove(path[0], router, amountIn);
@@ -25,7 +25,7 @@ contract BancorRouter {
                 path[1],
                 amountIn,
                 amountOutMin,
-                uint256(deadline),
+                deadline,
                 recipient
             )
         );

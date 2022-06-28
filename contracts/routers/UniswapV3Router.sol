@@ -13,8 +13,8 @@ contract UniswapV3Router {
         address[] memory path,
         uint256 amountIn,
         uint256 amountOutMin,
-        uint24 poolFee,
-        uint64 deadline
+        uint256 deadline,
+        uint24 poolFee
     ) internal returns (uint256 amountOut) {
         TransferHelper.safeApprove(path[0],router, amountIn);
         uniV3Selector = IUniswapV3Router.exactInputSingle.selector;
