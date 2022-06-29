@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.7.6;
 pragma experimental ABIEncoderV2;
-import { IOneinchV4Router, IAggregationExecutor } from "../interfaces/IOneinchRouter.sol";
+import { IAggregationRouterV4, IAggregationExecutor } from "../interfaces/IOneinchRouter.sol";
 import { TransferHelper } from "../utils/TransferHelper.sol";
 
 contract OneinchRouter {
@@ -19,9 +19,9 @@ contract OneinchRouter {
             bytes memory data
         ) = router.call(
             abi.encodeWithSelector(
-                IOneinchV4Router.swap.selector,
+                IAggregationRouterV4.swap.selector,
                 IAggregationExecutor(executor),
-                IOneinchV4Router.SwapDescription({
+                IAggregationRouterV4.SwapDescription({
                     srcToken: path[0],
                     dstToken: path[1],
                     srcReceiver: payable(recipient),

@@ -2,7 +2,7 @@
 pragma solidity >=0.7.6;
 pragma abicoder v2;
 // https://github.com/1inch/1inchProtocol
-interface IOneinchV4Router {
+interface IAggregationRouterV4 {
     struct SwapDescription {
         address srcToken;
         address dstToken;
