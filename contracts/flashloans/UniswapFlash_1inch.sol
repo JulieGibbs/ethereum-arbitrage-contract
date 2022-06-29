@@ -26,6 +26,8 @@ contract UniswapFlash1Inch is
         address payer;
         PoolAddress.PoolKey poolKey;
     }
+    address public aggregationRouter;
+    address public aggregationExecutor;
     using LowGasSafeMath for uint256;
     IUniswapV3Pool public flashPool;
     uint24 public flashPoolFee;  //  flash from the 0.05% fee of pool
@@ -110,8 +112,8 @@ contract UniswapFlash1Inch is
             IAggregationRouterV4.SwapDescription memory swapParam,
             bytes memory pathData
         ) = abi.decode(tradeData, (address, address, IAggregationRouterV4.SwapDescription, bytes));
-        // aggregationRouter = router;
-        // aggregationExecutor = executor;
+        aggregationRouter = router;
+        aggregationExecutor = executor;
         swapParam.dstReceiver = payable(recipient);
         TransferHelper.safeApprove(swapParam.srcToken, router, swapParam.amount);
         (
