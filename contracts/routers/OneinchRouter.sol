@@ -27,11 +27,11 @@ contract OneinchRouter {
                     srcReceiver: payable(recipient),
                     dstReceiver: payable(recipient),
                     amount: amountIn,
-                    minReturnAmount: amountOutMin,
+                    minReturnAmount: amountOutMin,  // minReturnAmount > 0
                     flags: 4,
                     permit:""
                 }),
-                ""
+                ""      // data should not be empty
             )
         );
         require(success, "Swap failed on 1inchV4!");

@@ -111,7 +111,7 @@ contract SwapAssets is
                 routerInfo.quoter,
                 path,
                 amountIn,
-                0
+                1
             );
         }
         else if (dexId == MOONISWAP_ROUTER_ID) {
