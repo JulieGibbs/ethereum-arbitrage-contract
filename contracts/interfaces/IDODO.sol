@@ -47,10 +47,7 @@ interface IDCPFactory {
     view
     returns (address[] memory baseToken0Pools, address[] memory baseToken1Pools);
 }
-interface IDODOApprove {
-    function claimTokens(address token,address who,address dest,uint256 amount) external;
-    function getDODOProxy() external view returns (address);
-}
+
 interface IDODOCallee {  
   
     function DVMFlashLoanCall(

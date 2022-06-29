@@ -1,24 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.7.6;
 
-import { IDODOV2, IDODOApprove, IDODOProxy, IDODOFactory} from "../interfaces/IDODO.sol";
+import { IDODOV2, IDODOProxy, IDODOFactory} from "../interfaces/IDODO.sol";
 import { TransferHelper } from "../utils/TransferHelper.sol";
 
-/*
-    There are six swap functions in DODOProxy. Which are executed for different sources or versions
-    
-    - dodoSwapV1: Used for DODOV1 pools
-    - dodoSwapV2ETHToToken: Used for DODOV2 pools and specify ETH as fromToken
-    - dodoSwapV2TokenToETH: Used for DODOV2 pools and specify ETH as toToken
-    - dodoSwapV2TokenToToken:  Used for DODOV2 pools and both fromToken and toToken are ERC20
-    - externalSwap: Used for executing third-party protocols' aggregation algorithm
-    - mixSwap: Used for executing DODO’s custom aggregation algorithm
-    Note: Best Trading path is calculated by off-chain program. DODOProxy's swap functions is only used for executing.
-*/
 contract DodoSwapRouter {
    
     IDODOProxy public dodoProxy;
-    IDODOApprove public dodoApprove;
+    address public dodoApprove = 0xCB859eA579b28e02B87A1FDE08d087ab9dbE5149;
     IDODOFactory public dodoFactory;
     event SwapedOnDodoV1(address indexed _sender, address indexed _assset, uint256 _amountOut);
     event SwapedOnDodoV2(address indexed _sender, address indexed _assset, uint256 _amountOut);
@@ -30,7 +19,7 @@ contract DodoSwapRouter {
         uint256 deadline
     ) internal returns (uint256 amountOut) {
         
-        require(address(dodoApprove) != address(0), "Invalid Dodo Approve!");
+        require(dodoApprove != address(0), "Invalid Dodo Approve!");
         /*
             Note: (only used for DODOV2 pool)
             Users can estimate prices before spending gas. Include two situations
@@ -63,7 +52,7 @@ contract DodoSwapRouter {
             Arbitrum DODOApprove: 0xA867241cDC8d3b0C07C85cC06F25a0cD3b5474d8
         */
        
-        TransferHelper.safeApprove(path[0], address(dodoApprove), amountIn);
+        TransferHelper.safeApprove(path[0], dodoApprove, amountIn);
 
 
         /*
@@ -87,6 +76,6 @@ contract DodoSwapRouter {
         emit SwapedOnDodoV2(recipient, path[1], amountOut);
     }
     function setDodoApprove(address _dodoApprove) external {
-        dodoApprove = IDODOApprove(_dodoApprove);
+        dodoApprove = _dodoApprove;
     }
 }

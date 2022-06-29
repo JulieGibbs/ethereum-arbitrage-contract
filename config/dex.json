@@ -76,7 +76,8 @@
         },
         "1inchV4": {
             "id": 15,
-            "Router": "0x1111111254fb6c44bAC0beD2854e76F90643097d"
+            "Router": "0x1111111254fb6c44bAC0beD2854e76F90643097d",
+            "Executor": "0x220bdA5c8994804Ac96ebe4DF184d25e5c2196D4"
         },
         "1inchV3": {
             "id": 16,
