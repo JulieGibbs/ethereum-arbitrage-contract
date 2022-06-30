@@ -41,8 +41,8 @@ yarn verify UniswapFlash1Inch --network  kovan
 ## Kovan Testnet Past Examples
 * Ensure to have your .env configuration setup with your etherscan API key, and your INFURA API keys as well. 
 
-* Successful profiting $1,249 DAI 
-Smart Contract Transaction: https://kovan.etherscan.io/tx/0x848afb676324d035ee6c58528bce0e2abe43c62a80ff4564aa4e4cd06fec262d
+* Successful profiting $99.9995 DAI 
+Smart Contract Transaction: https://kovan.etherscan.io/tx/0xf1c4037914460161b3f63779707c1f42fd7c6f6726b4193a38666dc87348ec4f
 
 
 
