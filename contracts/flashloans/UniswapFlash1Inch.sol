@@ -92,9 +92,11 @@ contract UniswapFlash1Inch is
         // start trade
         uint256 amountOut = 0;
         for (uint i; i < tokenPath.length; i++) {
-            uint256 amountIn = IERC20(tokenPath[i]).balanceOf(address(this));
-            TransferHelper.safeApprove(tokenPath[i], routers[i], amountIn);
-            (bool success, ) = routers.call(tradeDatas[i]);
+            address router = routers[i];
+            address tokenIn = tokenPath[i];
+            uint256 amountIn = IERC20(tokenIn).balanceOf(address(this));
+            TransferHelper.safeApprove(tokenIn, router, amountIn);
+            (bool success, ) = router.call(tradeDatas[i]);
             require(success, "Swap Failue!");
 
         }
