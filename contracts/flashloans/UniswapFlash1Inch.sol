@@ -26,8 +26,6 @@ contract UniswapFlash1Inch is
         address payer;
         PoolAddress.PoolKey poolKey;
     }
-    address public aggregationRouter;
-    address public aggregationExecutor;
     using LowGasSafeMath for uint256;
     IUniswapV3Pool public flashPool;
     uint24 public flashPoolFee;  //  flash from the 0.05% fee of pool
@@ -38,7 +36,9 @@ contract UniswapFlash1Inch is
     function initUniFlashSwap(
         address[] calldata loanAssets,
         uint256[] calldata loanAmounts,
-        bytes calldata tradeData
+        address[] calldata oneInchRouters,
+        address[] calldata tokenPath,
+        bytes[] calldata tradeData
     ) external nonReentrant {
         PoolAddress.PoolKey memory poolKey = PoolAddress.PoolKey(
             {
@@ -61,6 +61,8 @@ contract UniswapFlash1Inch is
                     payer: msg.sender,
                     poolKey: poolKey
                 }),
+                oneInchRouters,
+                tokenPath,
                 tradeData
             )
         );
@@ -74,8 +76,10 @@ contract UniswapFlash1Inch is
        
         (
             FlashCallbackData memory decoded,
-            bytes memory tradeData
-        ) = abi.decode(data, (FlashCallbackData, bytes));
+            address[] memory routers,
+            address[] memory tokenPath,
+            bytes[] memory tradeDatas
+        ) = abi.decode(data, (FlashCallbackData, address[],  address[], bytes[]));
         CallbackValidation.verifyCallback(factory, decoded.poolKey);
         require(
             decoded.amount0 == 0 ||  decoded.amount1 == 0,
@@ -86,10 +90,13 @@ contract UniswapFlash1Inch is
         uint256 fee = decoded.amount0 > 0 ? fee0 : fee1;
         address payer = decoded.payer;
         // start trade
-        bytes[] memory dexDatas = abi.decode(tradeData, (bytes[]));
         uint256 amountOut = 0;
-        for (uint i; i < dexDatas.length; i++) {
-            amountOut = oneinchV4Swap(address(this), dexDatas[i]);
+        for (uint i; i < tokenPath.length; i++) {
+            uint256 amountIn = IERC20(tokenPath[i]).balanceOf(address(this));
+            TransferHelper.safeApprove(tokenPath[i], routers[i], amountIn);
+            (bool success, ) = routers.call(tradeDatas[i]);
+            require(success, "Swap Failue!");
+
         }
   
         uint256 amountOwed = LowGasSafeMath.add(loanAmount, fee);
@@ -102,34 +109,7 @@ contract UniswapFlash1Inch is
             pay(loanAsset, address(this), payer, profit);
         }
     }
-    function oneinchV4Swap(
-        address recipient,
-       bytes memory tradeData
-    ) internal returns (uint256 amountOut) {
-        (
-            address router,
-            address executor,
-            IAggregationRouterV4.SwapDescription memory swapParam,
-            bytes memory pathData
-        ) = abi.decode(tradeData, (address, address, IAggregationRouterV4.SwapDescription, bytes));
-        aggregationRouter = router;
-        aggregationExecutor = executor;
-        swapParam.dstReceiver = payable(recipient);
-        TransferHelper.safeApprove(swapParam.srcToken, router, swapParam.amount);
-        (
-            bool success, 
-            bytes memory returnData
-        ) = router.call(
-            abi.encodeWithSelector(
-                IAggregationRouterV4.swap.selector,
-                IAggregationExecutor(executor),
-                swapParam,
-                pathData      // data should not be empty
-            )
-        );
-        require(success, "Swap failed on 1inchV4!");
-        (amountOut,,) = abi.decode(returnData, (uint256, uint256, uint256));
-    }
+    
     function setFlashPoolFee(uint24 poolFee) public onlyOwner() {
         flashPoolFee = poolFee;
     }
