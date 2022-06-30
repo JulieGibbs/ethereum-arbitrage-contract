@@ -51,4 +51,3 @@ Smart Contract Transaction: https://kovan.etherscan.io/tx/0xf1c4037914460161b3f6
 ## COMING SOON (THINGS REQUIRED)
 * AAVE, EQUALIZER, DODO Flashloan contracts activated for Mainnet
 * bot.js needs to be modified to lookup mainnet opportunities
-* flashswap needs to change to mainnet from kovan testenet config 
