@@ -36,8 +36,8 @@ contract UniswapFlash1Inch is
     function initUniFlashSwap(
         address[] calldata loanAssets,
         uint256[] calldata loanAmounts,
-        address[] calldata oneInchRouters,
         address[] calldata tokenPath,
+        address[] calldata oneInchRouters,
         bytes[] calldata tradeDatas
     ) external nonReentrant {
         PoolAddress.PoolKey memory poolKey = PoolAddress.PoolKey(
