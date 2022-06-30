@@ -6,4 +6,5 @@ bot
 .env
 test
 yarn-error.log
-output.json
+contracts/mocks
+migrations/2_mock_swap.js
