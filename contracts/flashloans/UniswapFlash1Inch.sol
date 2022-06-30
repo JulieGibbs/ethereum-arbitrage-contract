@@ -38,7 +38,7 @@ contract UniswapFlash1Inch is
         uint256[] calldata loanAmounts,
         address[] calldata oneInchRouters,
         address[] calldata tokenPath,
-        bytes[] calldata tradeData
+        bytes[] calldata tradeDatas
     ) external nonReentrant {
         PoolAddress.PoolKey memory poolKey = PoolAddress.PoolKey(
             {
@@ -63,7 +63,7 @@ contract UniswapFlash1Inch is
                 }),
                 oneInchRouters,
                 tokenPath,
-                tradeData
+                tradeDatas
             )
         );
     }
@@ -75,22 +75,21 @@ contract UniswapFlash1Inch is
     ) external override {
         require(msg.sender == address(flashPool), "Only Pool can call!");
         (
-            FlashCallbackData memory decoded,
+            FlashCallbackData memory callback,
             address[] memory routers,
             address[] memory tokenPath,
             bytes[] memory tradeDatas
         ) = abi.decode(data, (FlashCallbackData, address[],  address[], bytes[]));
-        CallbackValidation.verifyCallback(factory, decoded.poolKey);
+        CallbackValidation.verifyCallback(factory, callback.poolKey);
         require(
-            decoded.amount0 == 0 ||  decoded.amount1 == 0,
+            callback.amount0 == 0 ||  callback.amount1 == 0,
             "one of amounts must be 0"
         );
-        address loanAsset = decoded.amount0 > 0 ? decoded.poolKey.token0: decoded.poolKey.token1;
-        uint256 loanAmount = decoded.amount0 > 0 ? decoded.amount0: decoded.amount1;
-        uint256 fee = decoded.amount0 > 0 ? fee0 : fee1;
-        address payer = decoded.payer;
+        address loanAsset = callback.amount0 > 0 ? callback.poolKey.token0: callback.poolKey.token1;
+        uint256 loanAmount = callback.amount0 > 0 ? callback.amount0: callback.amount1;
+        uint256 fee = callback.amount0 > 0 ? fee0 : fee1;
+        address payer = callback.payer;
         // start trade
-        uint256 amountOut = 0;
         for (uint i; i < tokenPath.length; i++) {
             address router = routers[i];
             address tokenIn = tokenPath[i];
@@ -100,10 +99,10 @@ contract UniswapFlash1Inch is
             require(success, "Swap Failue!");
 
         }
-  
+        uint256 amountOut = IERC20(loanAsset).balanceOf(address(this));
         uint256 amountOwed = LowGasSafeMath.add(loanAmount, fee);
         
-        if (amountOwed > 0) {
+        if (amountOut >= amountOwed) {
             pay(loanAsset, address(this), msg.sender, amountOwed);
         }
         uint256 profit = LowGasSafeMath.sub(amountOut, amountOwed);
