@@ -73,7 +73,7 @@ contract UniswapFlash1Inch is
         uint256 fee1,
         bytes calldata data
     ) external override {
-       
+        require(msg.sender == address(flashPool), "Only Pool can call!");
         (
             FlashCallbackData memory decoded,
             address[] memory routers,
