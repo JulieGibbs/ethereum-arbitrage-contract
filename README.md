@@ -29,22 +29,15 @@ yarn migrate-kovan
 ```
 
 ```
-yarn verify UniswapFlash --network  kovan
+yarn verify UniswapFlash1Inch --network  kovan
 ```
 
-# Developer Instruction Manual (KOVAN TESTNET): 
 
-## Modifying flashswap.js
-**Flashswap.js is crucial for currently modifying trades created via UniswapFlash.sol**
-* const uniswapFlash_addr is responsbile for the contract address the trade calls [UniSwapFlash.sol](contracts/UniswapFlash.sol)
-* UniswapV3 is 1, UniswapV2 is 2 and Sushiswap is 3.
-* const tradeDexes = [3, 2];
 
-## Modifying UniswapFlash.sol
+## Modifying UniswapFlash1Inch.sol
 
-## Adding a new DEX
 
-## Adding a new interface
+## Integrating 1Inch V4 Router 
 ## Kovan Testnet Past Examples
 * Ensure to have your .env configuration setup with your etherscan API key, and your INFURA API keys as well. 
 
