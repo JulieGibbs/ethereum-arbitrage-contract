@@ -6,9 +6,9 @@ import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 
 contract SwapInforRegistry is Ownable {
     enum DexSeries {
+        Other,
         UniSwapV3,
-        UniSwapV2,
-        Other
+        UniSwapV2
     }
     struct SwapRouterInfo {
         address router;

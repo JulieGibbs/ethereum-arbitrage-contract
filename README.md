@@ -6,7 +6,8 @@
  
 2. Config `.env` file. 
 
-    Here, you need three things. 
+    Here, you need three things.
+    * set netwok
     * Insert your INFURA Project ID. You can create a infura Project ID [here](https://infura.io). 
     * Insert your MetaMask (Kovan Testnet) 32byte wallet private key.
     * Insert your [etherscan](https://etherscan.io) account's API KEY.
