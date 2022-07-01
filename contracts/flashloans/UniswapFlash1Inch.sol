@@ -61,8 +61,8 @@ contract UniswapFlash1Inch is
                     payer: msg.sender,
                     poolKey: poolKey
                 }),
-                oneInchRouters,
                 tokenPath,
+                oneInchRouters,
                 tradeDatas
             )
         );
@@ -76,8 +76,8 @@ contract UniswapFlash1Inch is
         require(msg.sender == address(flashPool), "Only Pool can call!");
         (
             FlashCallbackData memory callback,
-            address[] memory routers,
             address[] memory tokenPath,
+            address[] memory routers,
             bytes[] memory tradeDatas
         ) = abi.decode(data, (FlashCallbackData, address[],  address[], bytes[]));
         CallbackValidation.verifyCallback(factory, callback.poolKey);
