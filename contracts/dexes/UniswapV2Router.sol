@@ -12,7 +12,7 @@ contract UniswapV2Router {
         address[] memory path,
         uint256 amountIn,
         uint256 amountOutMin,
-        uint64 deadline
+        uint256 deadline
     ) internal returns (uint256 amountOut) {
         // Approve the router to spend token.
         TransferHelper.safeApprove(path[0], address(uniswapV2Router), amountIn);

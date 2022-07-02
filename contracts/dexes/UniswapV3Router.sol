@@ -15,7 +15,7 @@ contract UniswapV3Router {
         uint256 amountIn,
         uint256 amountOutMin,
         uint24 poolFee,
-        uint64 deadline
+        uint256 deadline
     ) internal returns (uint256 amountOut) {
         TransferHelper.safeApprove(path[0], address(uniswapV3Router), amountIn);
 
