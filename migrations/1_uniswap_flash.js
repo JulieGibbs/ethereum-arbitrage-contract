@@ -35,7 +35,7 @@ module.exports = async (deployer) => {
         deadline: 300,
         series: 1
     };
-    await uniswapFlash.addRouter(dexes[network].UniSwapV3.id, swapV3RouterInfo);
+    await uniswapFlash.setSwapRouterInfo(dexes[network].UniSwapV3.id, swapV3RouterInfo);
 
     const swapV2RouterInfo = {
         router: uniV2_router,
@@ -43,7 +43,7 @@ module.exports = async (deployer) => {
         deadline: 300,
         series: 2
     };
-    await uniswapFlash.addRouter(dexes[network].UniSwapV2.id, swapV2RouterInfo);
+    await uniswapFlash.setSwapRouterInfo(dexes[network].UniSwapV2.id, swapV2RouterInfo);
 
     const sushiRouterInfo = {
         router: sushi_router,
@@ -51,7 +51,7 @@ module.exports = async (deployer) => {
         deadline: 300,
         series: 2
     };
-    await uniswapFlash.addRouter(dexes[network].SushiSwap.id, sushiRouterInfo);
+    await uniswapFlash.setSwapRouterInfo(dexes[network].SushiSwap.id, sushiRouterInfo);
 
     if (network == 'mainnet') {
         const shibaRouterInfo = {
@@ -60,7 +60,7 @@ module.exports = async (deployer) => {
             deadline: 300,
             series: 2
         };
-        await uniswapFlash.addRouter(dexes[network].ShibaSwap.id, shibaRouterInfo);
+        await uniswapFlash.setSwapRouterInfo(dexes[network].ShibaSwap.id, shibaRouterInfo);
 
         const defiRouterInfo = {
             router: defi_router,
@@ -68,7 +68,7 @@ module.exports = async (deployer) => {
             deadline: 300,
             series: 2
         };
-        await uniswapFlash.addRouter(dexes[network].DefiSwap.id, defiRouterInfo);
+        await uniswapFlash.setSwapRouterInfo(dexes[network].DefiSwap.id, defiRouterInfo);
     }
     // const info = await uniswapFlash.swapRouterInfos(1);
     // console.log("UniswapV3Router ---> ", info.router);

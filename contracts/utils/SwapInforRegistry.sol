@@ -12,7 +12,6 @@ contract SwapInforRegistry is Ownable {
     }
     struct SwapRouterInfo {
         address router;
-        address factory;
         uint24 poolFee;    //  3000
         uint64 deadline;    //  300 ~ 600
         DexSeries series;    
@@ -30,7 +29,6 @@ contract SwapInforRegistry is Ownable {
     event RouterInfoSeted(
         uint16 _index,
         address indexed _router,
-        address indexed _factory,
         uint24 _poolFee
     );
     function setSwapRouterInfo(
@@ -41,7 +39,6 @@ contract SwapInforRegistry is Ownable {
         emit RouterInfoSeted(
             routerID,
             routerInfo.router,
-            routerInfo.factory,
             routerInfo.poolFee
         );
     }
