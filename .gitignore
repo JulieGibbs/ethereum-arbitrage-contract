@@ -3,6 +3,8 @@ bin
 build/contracts
 types/truffle-contracts
 bot
+.husky
+.vscode
 .env
 test
 yarn-error.log
