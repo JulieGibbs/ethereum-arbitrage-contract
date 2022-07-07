@@ -10,12 +10,7 @@ module.exports = async (deployer) => {
    
     // token addresses
     const WETH = tokens[network].WETH; // '0xd0A1E359811322d97991E03f863a0C30C2cF029C';
-    const DAI = tokens[network].DAI; // '0x4F96Fe3b7A6Cf9725f59d353F723c1bDb64CA6Aa';
-  
     await deployer.deploy(UniswapFlash, uniV3_factory, WETH);
     const uniswapFlash = await UniswapFlash.deployed();
     console.log("Contract is depoyed to: ", uniswapFlash.address);
-    // set pool fee
-    // await uniswapFlash.setFlashPoolFee(500);
-   
 };

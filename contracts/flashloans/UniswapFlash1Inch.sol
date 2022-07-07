@@ -85,7 +85,7 @@ contract UniswapFlash1Inch is
         uint256 loanAmount = callback.amount0 > 0 ? callback.amount0: callback.amount1;
         uint256 fee = callback.amount0 > 0 ? fee0 : fee1;
         // start trade
-        for (uint i; i < routers.length; i++) {
+        for (uint i; i < tokenPath.length; i++) {
            swapExecute(tokenPath[i], routers[i], tradeDatas[i]);
         }
         uint256 amountOut = IERC20(loanToken).balanceOf(address(this));
