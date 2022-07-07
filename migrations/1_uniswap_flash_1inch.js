@@ -14,8 +14,8 @@ module.exports = async (deployer) => {
   
     await deployer.deploy(UniswapFlash, uniV3_factory, WETH);
     const uniswapFlash = await UniswapFlash.deployed();
-    // console.log("Contract address ---> ", uniswapFlash.address);
+    console.log("Contract is depoyed to: ", uniswapFlash.address);
     // set pool fee
-    await uniswapFlash.setFlashPoolFee(500);
+    // await uniswapFlash.setFlashPoolFee(500);
    
 };

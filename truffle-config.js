@@ -58,29 +58,29 @@ module.exports = {
     ropsten: {
       provider: new HDWalletProvider(PRIVATE_KEY, "https://ropsten.infura.io/v3/" + INFURA_API_KEY),
       network_id: 3,
-      gas: 5000000,
+      gas: 3000000,
       gasPrice: 5000000000, // 5 Gwei
       skipDryRun: true
     },
     rinkeby: {
       provider: new HDWalletProvider(PRIVATE_KEY, "https://rinkeby.infura.io/v3/" + INFURA_API_KEY),
       network_id: 4,
-      gas: 5000000,
+      gas: 3000000,
       gasPrice: 5000000000, // 5 Gwei
       skipDryRun: true
     },
     kovan: {
       provider: new HDWalletProvider(PRIVATE_KEY, "https://kovan.infura.io/v3/" + INFURA_API_KEY),
       network_id: 42,
-      gas: 30000000,
+      gas: 3000000,
       gasPrice: 5000000000, // 5 Gwei
     skipDryRun: true
     },
     mainnet: {
       provider: new HDWalletProvider(PRIVATE_KEY, "https://mainnet.infura.io/v3/" + INFURA_API_KEY),
       network_id: 1,
-      gas: 5000000,
-      gasPrice: 5000000000 // 5 Gwei
+      gas: 3000000,
+      gasPrice: 3000000000 // 3 Gwei
     },
     // Useful for private networks
     // private: {
@@ -102,7 +102,7 @@ module.exports = {
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
       // settings: {          // See the solidity docs for advice about optimization and evmVersion
        optimizer: {
-         enabled: true,
+         enabled: false,
          runs: 200
        },
       //  evmVersion: "byzantium"
