@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT;
 pragma solidity >=0.7.6;
-pragma experimental ABIEncoderV2;
+pragma abicoder v2;
 
 import { IUniswapV3FlashCallback } from "../interfaces/IUniswapV3FlashCallback.sol";
 import { IUniswapV3Pool } from "../interfaces/IUniswapV3Pool.sol";
@@ -85,7 +85,7 @@ contract UniswapFlash1Inch is
         uint256 loanAmount = callback.amount0 > 0 ? callback.amount0: callback.amount1;
         uint256 fee = callback.amount0 > 0 ? fee0 : fee1;
         // start trade
-        for (uint i; i < tokenPath.length; i++) {
+        for (uint256 i = 0; i < routers.length; i++) {
            swapExecute(tokenPath[i], routers[i], tradeDatas[i]);
         }
         uint256 amountOut = IERC20(loanToken).balanceOf(address(this));
@@ -105,7 +105,7 @@ contract UniswapFlash1Inch is
         approveToken(token, router, amount);
         // solhint-disable-next-line avoid-low-level-calls
         (bool success, ) = router.call{value: msg.value}(tradeData);
-        require(success, "Swap Failue!");
+        require(success, "1Inch Swap Failure!");
     }
     function getFlashPool(
         address factory, 
