@@ -28,13 +28,17 @@ yarn build-deploy-kovan
 yarn verify UniswapFlash1Inch --network  kovan
 ```
 5. Deploy Smart Contract on Mainnet Fork
+
+Note: Can use Ganache CLI or GUI. here describe how to use Ganache CLI.
 ```
 yarn add global ganache-cli
 ```
 ```
 yarn mainnet-fork https://mainnet.infura.io/v3/<YOUR_INFURA_API_KEY>
 ```
+
 Note: Don't close current terminal window and start with new terminal window.
+
 ```
 yarn build-deploy
 ```
