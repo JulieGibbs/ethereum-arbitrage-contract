@@ -24,7 +24,9 @@
     "build-deploy-ropsten": "npm run compile && npm run migrate-ropsten",
     "build-deploy-kovan": "npm run compile && npm run migrate-kovan",
     "build-deploy-mainnet": "npm run compile && npm run migrate-mainnet",
-    "verify": "npx truffle run verify"
+    "verify": "npx truffle run verify",
+    "mainnet-fork":"npx ganache-cli --fork"
+
   },
   "keywords": [
     "flashloan",

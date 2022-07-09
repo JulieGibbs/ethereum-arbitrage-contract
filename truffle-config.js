@@ -52,7 +52,7 @@ module.exports = {
     //
     development: {
      host: "127.0.0.1",     // Localhost (default: none)
-     port: 7545,            // Standard Ethereum port (default: none)
+     port: 8545,            // Standard Ethereum port (default: none)
      network_id: "*",       // Any network (default: none)
     },
     ropsten: {
@@ -72,16 +72,16 @@ module.exports = {
     kovan: {
       provider: new HDWalletProvider(PRIVATE_KEY, "https://kovan.infura.io/v3/" + INFURA_API_KEY),
       network_id: 42,
-      gas: 3000000,
+      gas: 30000000,
       gasPrice: 5000000000, // 5 Gwei
     skipDryRun: true
     },
     mainnet: {
       provider: new HDWalletProvider(PRIVATE_KEY, "https://mainnet.infura.io/v3/" + INFURA_API_KEY),
       network_id: 1,
-      gas: 3000000,
-      gasPrice: 3000000000 // 3 Gwei
-    },
+      gas: 5000000,
+      gasPrice: 5000000000 // 50 Gwei
+    }, // https://mainnet.infura.io/v3/6fd3cc9b91d845eda470f33d95493f9c
     // Useful for private networks
     // private: {
     // provider: () => new HDWalletProvider(mnemonic, `https://network.io`),
@@ -125,7 +125,7 @@ module.exports = {
   //
   // After you backed up your artifacts you can utilize db by running migrate as follows: 
   // $ truffle migrate --reset --compile-all
-  //
+  //  
   // db: {
     // enabled: false,
     // host: "127.0.0.1",

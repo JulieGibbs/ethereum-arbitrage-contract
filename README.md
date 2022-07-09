@@ -19,20 +19,25 @@ npm i @truffle/hdwallet-provider@next
 yarn install
 ```
 
-4. Run Smart Contract function defintions defined in flashswap.js
+4. Deploy Smart Contract on Kovan Testnet
 ```
-yarn post
-```
-
-```
-yarn migrate-kovan
+yarn build-deploy-kovan
 ```
 
 ```
 yarn verify UniswapFlash1Inch --network  kovan
 ```
-
-
+5. Deploy Smart Contract on Mainnet Fork
+```
+yarn add global ganache-cli
+```
+```
+yarn mainnet-fork https://mainnet.infura.io/v3/<YOUR_INFURA_API_KEY>
+```
+Note: Don't close current terminal window and start with new terminal window.
+```
+yarn build-deploy
+```
 
 ## Modifying UniswapFlash1Inch.sol
 
