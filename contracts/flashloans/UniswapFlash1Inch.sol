@@ -32,42 +32,47 @@ contract UniswapFlash1Inch is
         address _WETH9
     ) PeripheryImmutableState(_factory, _WETH9) {}
     function initUniFlashSwap(
-        address[] calldata loanAssets,
-        uint256[] calldata loanAmounts,
-        address[] calldata tokenPath,
-        address[] calldata spenders,
-        address[] calldata routers,
-        bytes[] calldata tradeDatas
+        address[] calldata _loanAssets,
+        uint256[] calldata _loanAmounts,
+        address[] calldata _tokenPath,
+        address[] calldata _spenders,
+        address[] calldata _routers,
+        bytes[] calldata _tradeDatas
     ) external payable nonReentrant {
+        
         PoolAddress.PoolKey memory poolKey = PoolAddress.PoolKey(
             {
-                token0: loanAssets[0],
-                token1: loanAssets[1],
+                token0: _loanAssets[0],
+                token1: _loanAssets[1],
                 fee: flashPoolFee
             }
         );
-        uint amount0 = loanAmounts[0];
-        uint amount1 = loanAmounts[1];
         address flashPool = getFlashPool(factory, poolKey);
         require(flashPool != address(0), "Invalid flash pool!");
-
+        uint256 amount0 = _loanAmounts[0];
+        uint256 amount1 = _loanAmounts[1];
+        FlashCallbackData memory callbackData = FlashCallbackData({
+            amount0: amount0,
+            amount1: amount1,
+            payer: msg.sender,
+            poolKey: poolKey
+        });
+        address[] memory tokenPath = _tokenPath;
+        address[] memory spenders = _spenders;
+        address[] memory routers = _routers;
+        bytes[] memory tradeDatas = _tradeDatas;
         IUniswapV3Pool(flashPool).flash(
             address(this),
             amount0,
             amount1,
             abi.encode(
-                FlashCallbackData({
-                    amount0: amount0,
-                    amount1: amount1,
-                    payer: msg.sender,
-                    poolKey: poolKey
-                }),
+                callbackData, 
                 tokenPath,
                 spenders,
                 routers,
                 tradeDatas
             )
-        );
+        );   
     }
 
     function uniswapV3FlashCallback(
@@ -90,7 +95,7 @@ contract UniswapFlash1Inch is
         // start trade
         for (uint256 i = 0; i < routers.length; i++) {
 
-           swapExecute(tokenPath[i], payable(spenders[i]), routers[i], tradeDatas[i]);
+           swapExecute(tokenPath[i], spenders[i], payable(routers[i]), tradeDatas[i]);
         }
         uint256 amountOut = IERC20(loanToken).balanceOf(address(this));
         uint256 amountOwed = loanAmount.add(fee);
