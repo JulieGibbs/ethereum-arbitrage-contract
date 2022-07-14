@@ -1,5 +1,5 @@
 require('dotenv').config();
-const UniswapFlash = artifacts.require("UniswapFlash1Inch");
+const UniswapFlash = artifacts.require("UniswapFlash");
 const dexes = require("../config/dex.json");
 const tokens = require("../config/token.json");
 const network = process.env.NET_ENV.toLowerCase() || '';

@@ -13,7 +13,7 @@ import { ReentrancyGuard } from "@openzeppelin/contracts/utils/ReentrancyGuard.s
 
 /// @title Flashloan contract implementation
 /// @notice contract using the Uniswap V3 flash function
-contract UniswapFlash1Inch is 
+contract UniswapFlash is 
     IUniswapV3FlashCallback,
     PeripheryImmutableState,
     PeripheryPayments,
@@ -119,13 +119,13 @@ contract UniswapFlash1Inch is
         approveToken(token, spender, amount);
         // solhint-disable-next-line avoid-low-level-calls
         (bool success, ) = router.call{value: msg.value}(tradeData);
-        require(success, "1Inch Swap Failure!");
+        require(success, "Swap Failure!");
     }
     function getFlashPool(
-        address factory, 
-        PoolAddress.PoolKey memory poolKey
+        address _factory, 
+        PoolAddress.PoolKey memory _poolKey
     ) internal pure returns (address) {
-        return PoolAddress.computeAddress(factory, poolKey);
+        return PoolAddress.computeAddress(_factory, _poolKey);
     }
     function approveToken(address token, address spender, uint256 amount) public {
         uint256 allowance = IERC20(token).allowance(address(this), spender);

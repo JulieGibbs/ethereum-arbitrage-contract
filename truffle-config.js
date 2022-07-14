@@ -51,9 +51,9 @@ module.exports = {
     // options below to some value.
     //
     development: {
-     host: "127.0.0.1",     // Localhost (default: none)
-     port: 7545,            // Standard Ethereum port (default: none)
-     network_id: "*",       // Any network (default: none)
+      host: "127.0.0.1",     // Localhost (default: none)
+      port: 7545,            // Standard Ethereum port (default: none)
+      network_id: "*",       // Any network (default: none)
     },
     ropsten: {
       provider: new HDWalletProvider(PRIVATE_KEY, "https://ropsten.infura.io/v3/" + INFURA_API_KEY),
@@ -73,14 +73,14 @@ module.exports = {
       provider: new HDWalletProvider(PRIVATE_KEY, "https://kovan.infura.io/v3/" + INFURA_API_KEY),
       network_id: 42,
       gas: 30000000,
-      gasPrice: 5000000000, // 5 Gwei
+      gasPrice: 20000000000, // 20 Gwei
       skipDryRun: true
     },
     mainnet: {
       provider: new HDWalletProvider(PRIVATE_KEY, "https://mainnet.infura.io/v3/" + INFURA_API_KEY),
       network_id: 1,
       gas: 5000000,
-      gasPrice: 5000000000, // 50 Gwei
+      gasPrice: 20000000000, // 20 Gwei
       // skipDryRun: true
     }, // https://mainnet.infura.io/v3/6fd3cc9b91d845eda470f33d95493f9c
     // Useful for private networks
