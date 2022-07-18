@@ -26,51 +26,42 @@ contract UniswapFlash is
         address payer;
         PoolAddress.PoolKey poolKey;
     }
+    struct Call {
+        address to;
+        bytes data;
+    }
     uint24 public flashPoolFee = 500;  //  flash from the 0.05% fee of pool
     constructor(
         address _factory,
         address _WETH9
     ) PeripheryImmutableState(_factory, _WETH9) {}
     function initUniFlashSwap(
-        address[] calldata _loanAssets,
-        uint256[] calldata _loanAmounts,
-        address[] calldata _tokenPath,
-        address[] calldata _spenders,
-        address[] calldata _routers,
-        bytes[] calldata _tradeDatas
+        address[] calldata loanAssets,
+        uint256[] calldata loanAmounts,
+        Call[] calldata calldatas
     ) external payable nonReentrant {
         
         PoolAddress.PoolKey memory poolKey = PoolAddress.PoolKey(
             {
-                token0: _loanAssets[0],
-                token1: _loanAssets[1],
+                token0: loanAssets[0],
+                token1: loanAssets[1],
                 fee: flashPoolFee
             }
         );
         address flashPool = getFlashPool(factory, poolKey);
         require(flashPool != address(0), "Invalid flash pool!");
-        uint256 amount0 = _loanAmounts[0];
-        uint256 amount1 = _loanAmounts[1];
-        FlashCallbackData memory callbackData = FlashCallbackData({
-            amount0: amount0,
-            amount1: amount1,
-            payer: msg.sender,
-            poolKey: poolKey
-        });
-        address[] memory tokenPath = _tokenPath;
-        address[] memory spenders = _spenders;
-        address[] memory routers = _routers;
-        bytes[] memory tradeDatas = _tradeDatas;
         IUniswapV3Pool(flashPool).flash(
             address(this),
-            amount0,
-            amount1,
+            loanAmounts[0],
+            loanAmounts[1],
             abi.encode(
-                callbackData, 
-                tokenPath,
-                spenders,
-                routers,
-                tradeDatas
+                FlashCallbackData({
+                    amount0: loanAmounts[0],
+                    amount1: loanAmounts[1],
+                    payer: msg.sender,
+                    poolKey: poolKey
+                }),
+                calldatas
             )
         );   
     }
@@ -82,20 +73,17 @@ contract UniswapFlash is
     ) external override {
         (
             FlashCallbackData memory callback,
-            address[] memory tokenPath,
-            address[] memory spenders,
-            address[] memory routers,
-            bytes[] memory tradeDatas
-        ) = abi.decode(data, (FlashCallbackData, address[], address[], address[], bytes[]));
+            Call[] memory calldatas
+        ) = abi.decode(data, (FlashCallbackData, Call[]));
         require(msg.sender == getFlashPool(factory, callback.poolKey), "Only Pool can call!");
         
         address loanToken = callback.amount0 > 0 ? callback.poolKey.token0: callback.poolKey.token1;
         uint256 loanAmount = callback.amount0 > 0 ? callback.amount0: callback.amount1;
         uint256 fee = callback.amount0 > 0 ? fee0 : fee1;
         // start trade
-        for (uint256 i = 0; i < routers.length; i++) {
+        for (uint256 i = 0; i < calldatas.length; i++) {
 
-           swapExecute(tokenPath[i], spenders[i], payable(routers[i]), tradeDatas[i]);
+           tradeExecute(payable(calldatas[i].to), calldatas[i].data);
         }
         uint256 amountOut = IERC20(loanToken).balanceOf(address(this));
         uint256 amountOwed = loanAmount.add(fee);
@@ -108,30 +96,19 @@ contract UniswapFlash is
             pay(loanToken, address(this), callback.payer, profit);
         }
     }
-    function swapExecute(
-        address token, 
-        address spender, 
-        address payable router, 
-        bytes memory tradeData
+    function tradeExecute(
+        address payable to, 
+        bytes memory data
     ) internal {
-        uint256 amount = IERC20(token).balanceOf(address(this));
-        require(amount > 0, "Balanace is 0!");
-        approveToken(token, spender, amount);
         // solhint-disable-next-line avoid-low-level-calls
-        (bool success, ) = router.call{value: msg.value}(tradeData);
-        require(success, "Swap Failure!");
+        (bool success, ) = to.call(data);
+        require(success, "Trading Failure!");
     }
     function getFlashPool(
         address _factory, 
         PoolAddress.PoolKey memory _poolKey
     ) internal pure returns (address) {
         return PoolAddress.computeAddress(_factory, _poolKey);
-    }
-    function approveToken(address token, address spender, uint256 amount) public {
-        uint256 allowance = IERC20(token).allowance(address(this), spender);
-        if (allowance < amount) {
-            TransferHelper.safeApprove(token, spender, uint256(-1));
-        }
     }
     function changeFlashPoolFee(uint24 poolFee) public onlyOwner() {
         flashPoolFee = poolFee;
