@@ -31,20 +31,24 @@ contract UniswapFlash is
         bytes data;
     }
     uint24 public flashPoolFee = 500;  //  flash from the 0.05% fee of pool
+    address DAI = 0x6B175474E89094C44Da98b954EedeAC495271d0F;
     constructor(
         address _factory,
         address _WETH9
     ) PeripheryImmutableState(_factory, _WETH9) {}
-    function initUniFlashSwap(
-        address[] calldata loanAssets,
-        uint256[] calldata loanAmounts,
+    function initFlashSwap(
+        address loanToken,
+        uint256 loanAmount,
         Call[] calldata calldatas
     ) external payable nonReentrant {
-        
+        address otherToken = loanToken == WETH9 ? DAI : WETH9;
+        (address token0, address token1) = loanToken < otherToken ? (loanToken, otherToken) : (otherToken, loanToken);
+        uint256 amount0 = loanToken == token0 ? loanAmount : 0;
+        uint256 amount1 = loanToken == token1 ? loanAmount : 0;
         PoolAddress.PoolKey memory poolKey = PoolAddress.PoolKey(
             {
-                token0: loanAssets[0],
-                token1: loanAssets[1],
+                token0: token0,
+                token1: token1,
                 fee: flashPoolFee
             }
         );
@@ -52,12 +56,12 @@ contract UniswapFlash is
         require(flashPool != address(0), "Invalid flash pool!");
         IUniswapV3Pool(flashPool).flash(
             address(this),
-            loanAmounts[0],
-            loanAmounts[1],
+            amount0,
+            amount1,
             abi.encode(
                 FlashCallbackData({
-                    amount0: loanAmounts[0],
-                    amount1: loanAmounts[1],
+                    amount0: amount0,
+                    amount1: amount1,
                     payer: msg.sender,
                     poolKey: poolKey
                 }),
@@ -73,7 +77,7 @@ contract UniswapFlash is
     ) external override {
         (
             FlashCallbackData memory callback,
-            Call[] memory calldatas
+            Call[] memory calls
         ) = abi.decode(data, (FlashCallbackData, Call[]));
         require(msg.sender == getFlashPool(factory, callback.poolKey), "Only Pool can call!");
         
@@ -81,9 +85,11 @@ contract UniswapFlash is
         uint256 loanAmount = callback.amount0 > 0 ? callback.amount0: callback.amount1;
         uint256 fee = callback.amount0 > 0 ? fee0 : fee1;
         // start trade
-        for (uint256 i = 0; i < calldatas.length; i++) {
+        for (uint i = 0; i < calls.length; i++) {
 
-           tradeExecute(payable(calldatas[i].to), calldatas[i].data);
+           // solhint-disable-next-line avoid-low-level-calls
+            (bool success, ) = calls[i].to.call(calls[i].data);
+            require(success, "Trading Failure!");
         }
         uint256 amountOut = IERC20(loanToken).balanceOf(address(this));
         uint256 amountOwed = loanAmount.add(fee);
@@ -95,14 +101,6 @@ contract UniswapFlash is
         if (profit > 0) {
             pay(loanToken, address(this), callback.payer, profit);
         }
-    }
-    function tradeExecute(
-        address payable to, 
-        bytes memory data
-    ) internal {
-        // solhint-disable-next-line avoid-low-level-calls
-        (bool success, ) = to.call(data);
-        require(success, "Trading Failure!");
     }
     function getFlashPool(
         address _factory, 
