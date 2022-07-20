@@ -1,5 +1,8 @@
 {
     "mainnet": {
+        "AaveV2": {
+            "Provider": "0x88757f2f99175387aB4C6a4b3067c77A695b0349"
+        },
         "UniSwapV2": {
             "id": 2,
             "Router": "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
