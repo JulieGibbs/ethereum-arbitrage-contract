@@ -20,37 +20,39 @@ npm i @truffle/hdwallet-provider@next
 yarn install
 ```
 
-4. Run Smart Contract function defintions defined in flashswap.js
+4. Deploy Smart Contract on Kovan Testnet
 ```
-yarn post
-```
-
-```
-yarn migrate-kovan
+yarn build-deploy-kovan
 ```
 
 ```
-yarn verify UniswapFlash --network  kovan
+yarn verify UniswapFlash1Inch --network  kovan
+```
+5. Deploy Smart Contract on Mainnet Fork
+
+Note: Can use Ganache CLI or GUI. here describe how to use Ganache CLI.
+```
+yarn add global ganache-cli
+```
+```
+yarn mainnet-fork https://mainnet.infura.io/v3/<YOUR_INFURA_API_KEY>
 ```
 
-# Developer Instruction Manual (KOVAN TESTNET): 
+Note: Don't close current terminal window and start with new terminal window.
 
-## Modifying flashswap.js
-**Flashswap.js is crucial for currently modifying trades created via UniswapFlash.sol**
-* const uniswapFlash_addr is responsbile for the contract address the trade calls [UniSwapFlash.sol](contracts/UniswapFlash.sol)
-* UniswapV3 is 1, UniswapV2 is 2 and Sushiswap is 3.
-* const tradeDexes = [3, 2];
+```
+yarn build-deploy
+```
 
-## Modifying UniswapFlash.sol
+## Modifying UniswapFlash1Inch.sol
 
-## Adding a new DEX
 
-## Adding a new interface
+## Integrating 1Inch V4 Router 
 ## Kovan Testnet Past Examples
 * Ensure to have your .env configuration setup with your etherscan API key, and your INFURA API keys as well. 
 
-* Successful profiting $1,249 DAI 
-Smart Contract Transaction: https://kovan.etherscan.io/tx/0x848afb676324d035ee6c58528bce0e2abe43c62a80ff4564aa4e4cd06fec262d
+* Successful profiting $99.9995 DAI 
+Smart Contract Transaction: https://kovan.etherscan.io/tx/0xf1c4037914460161b3f63779707c1f42fd7c6f6726b4193a38666dc87348ec4f
 
 
 
@@ -59,4 +61,3 @@ Smart Contract Transaction: https://kovan.etherscan.io/tx/0x848afb676324d035ee6c
 ## COMING SOON (THINGS REQUIRED)
 * AAVE, EQUALIZER, DODO Flashloan contracts activated for Mainnet
 * bot.js needs to be modified to lookup mainnet opportunities
-* flashswap needs to change to mainnet from kovan testenet config 

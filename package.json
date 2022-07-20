@@ -11,20 +11,19 @@
     "prettier:solidity": "prettier --write ./contracts/**/*.sol",
     "compile": "npx truffle compile",
     "migrate": "npx truffle migrate",
-    "migrate-ropsten": "npx truffle migrate --reset --network ropsten",
     "migrate-kovan": "npx truffle migrate --reset --network kovan",
     "migrate-mainnet": "npx truffle migrate --reset --network mainnet",
     "migrate-reset": "npx truffle migrate --reset",
     "console": "npx truffle console",
     "test": "npx truffle test",
-    "console-ropsten": "truffle console --network ropsten",
     "console-kovan": "truffle console --network kovan",
     "console-mainnet": "truffle console --network mainnet",
     "build-deploy": "npm run compile && npm run migrate-reset",
-    "build-deploy-ropsten": "npm run compile && npm run migrate-ropsten",
     "build-deploy-kovan": "npm run compile && npm run migrate-kovan",
     "build-deploy-mainnet": "npm run compile && npm run migrate-mainnet",
-    "verify": "npx truffle run verify"
+    "verify": "npx truffle run verify",
+    "mainnet-fork":"npx ganache-cli --fork https://mainnet.infura.io/v3/"
+
   },
   "keywords": [
     "flashloan",
@@ -34,9 +33,7 @@
   "author": "dmytro",
   "license": "MIT",
   "dependencies": {
-    "@bundle-dao/pancakeswap-peripheral": "^1.1.8",
     "@openzeppelin/contracts": "3.4.2-solc-0.7",
-    "@shibaswap/core": "^0.0.2",
     "@uniswap/sdk": "^3.0.3",
     "@uniswap/v2-core": "^1.0.1",
     "@uniswap/v2-periphery": "^1.1.0-beta.0",
