@@ -1,7 +1,7 @@
 {
   "extends": "solhint:all",
   "rules": {
-    "compiler-version": ["error","^0.7.6"],
+    "compiler-version": ["error","^0.8.0"],
     "prettier/prettier": "error",
     "func-visibility": ["warn",{"ignoreConstructors": true}]
   },

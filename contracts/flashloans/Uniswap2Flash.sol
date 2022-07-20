@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT;
-pragma solidity >=0.7.6;
+pragma solidity >=0.8.0;
 pragma abicoder v2;
 
-import { IUniswapV2Pair } from "../interfaces/IUniswapV2Pair.sol";
-import { IUniswapV2Factory } from "../interfaces/IUniswapV2Factory.sol";
-import { IUniswapV2Callee } from "../interfaces/IUniswapV2Callee.sol";
+import { IUniswapV2Pair } from "../interfaces/uniswap/IUniswapV2Pair.sol";
+import { IUniswapV2Factory } from "../interfaces/uniswap/IUniswapV2Factory.sol";
+import { IUniswapV2Callee } from "../interfaces/uniswap/IUniswapV2Callee.sol";
 import { PeripheryPayments, IERC20 } from "../utils/PeripheryPayments.sol";
 import { PeripheryImmutableState } from "../utils/PeripheryImmutableState.sol";
 import { SafeMath } from "../utils/SafeMath.sol";
@@ -38,26 +38,25 @@ contract Uniswap2Flash is
     ) external {
         // Get the Factory Pair address for combined tokens
         address otherToken = loanToken == WETH9 ? DAI : WETH9;
-        address flashPool = IUniswapV2Factory(FACTORY).getPair(loanToken, otherToken);
-
+        address flashPool = IUniswapV2Factory(factory).getPair(loanToken, otherToken);
         // Return error if combination does not exit
         require (flashPool != address(0), "Invalid flash pool!");
         address token0 = IUniswapV2Pair(flashPool).token0();
         address token1 = IUniswapV2Pair(flashPool).token1();
         uint256 amount0Out = loanToken == token0 ? loanAmount : 0;
         uint256 amount1Out = loanToken == token1 ? loanAmount : 0;
-
+        FlashCallbackData memory callbackData = FlashCallbackData({
+            token: loanToken,
+            amount: loanAmount,
+            payer: msg.sender
+        });
         // Execute the initial swap to get the loan
         IUniswapV2Pair(flashPool).swap(
             amount0Out, 
             amount1Out, 
             address(this), 
             abi.encode(
-                FlashCallbackData({
-                    token: loanToken,
-                    amount: loanAmount,
-                    payer: msg.sender
-                }),
+                callbackData,
                 flashPool,
                 calls
             )
@@ -65,9 +64,9 @@ contract Uniswap2Flash is
     }
 
     function uniswapV2Call(
-        address _sender, 
-        uint256 , 
-        uint256 , 
+        address, 
+        uint256, 
+        uint256, 
         bytes calldata data
     ) external override {
         // Ensure this request cane from the contract

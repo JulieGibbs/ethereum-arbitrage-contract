@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
-pragma solidity >=0.7.6;
+pragma solidity >=0.8.0;
 
 /// @title Callback for IUniswapV3PoolActions#flash
 /// @notice Any contract that calls IUniswapV3PoolActions#flash must implement this interface

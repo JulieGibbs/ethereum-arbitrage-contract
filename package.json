@@ -22,8 +22,7 @@
     "build-deploy-kovan": "npm run compile && npm run migrate-kovan",
     "build-deploy-mainnet": "npm run compile && npm run migrate-mainnet",
     "verify": "npx truffle run verify",
-    "mainnet-fork":"npx ganache-cli --fork https://mainnet.infura.io/v3/"
-
+    "mainnet-fork": "npx ganache-cli --fork https://mainnet.infura.io/v3/"
   },
   "keywords": [
     "flashloan",
@@ -33,7 +32,7 @@
   "author": "dmytro",
   "license": "MIT",
   "dependencies": {
-    "@openzeppelin/contracts": "3.4.2-solc-0.7",
+    "@openzeppelin/contracts": "^4.7.1",
     "@uniswap/sdk": "^3.0.3",
     "@uniswap/v2-core": "^1.0.1",
     "@uniswap/v2-periphery": "^1.1.0-beta.0",

@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: MIT;
-pragma solidity >=0.7.6;
+pragma solidity >=0.8.0;
 pragma abicoder v2;
 
-import { IUniswapV3FlashCallback } from "../interfaces/IUniswapV3FlashCallback.sol";
-import { IUniswapV3Pool } from "../interfaces/IUniswapV3Pool.sol";
+import { IUniswapV3FlashCallback } from "../interfaces/uniswap/IUniswapV3FlashCallback.sol";
+import { IUniswapV3Pool } from "../interfaces/uniswap/IUniswapV3Pool.sol";
 import { PeripheryPayments, IERC20 } from "../utils/PeripheryPayments.sol";
 import { PeripheryImmutableState } from "../utils/PeripheryImmutableState.sol";
 import { PoolAddress } from "../utils/PoolAddress.sol";
 import { SafeMath } from "../utils/SafeMath.sol";
 import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
-import { ReentrancyGuard } from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import { ReentrancyGuard } from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 /// @title Flashloan contract implementation
 /// @notice contract using the Uniswap V3 flash function
@@ -38,35 +38,33 @@ contract Uniswap3Flash is
     function initFlashloan(
         address loanToken,
         uint256 loanAmount,
-        Call[] calldata calldatas
+        Call[] calldata calls
     ) external payable nonReentrant {
         address otherToken = loanToken == WETH9 ? DAI : WETH9;
         (address token0, address token1) = loanToken < otherToken ? (loanToken, otherToken) : (otherToken, loanToken);
         uint256 amount0 = loanToken == token0 ? loanAmount : 0;
         uint256 amount1 = loanToken == token1 ? loanAmount : 0;
-        PoolAddress.PoolKey memory poolKey = PoolAddress.PoolKey(
-            {
-                token0: token0,
-                token1: token1,
-                fee: flashPoolFee
-            }
+        
+        address flashPool = PoolAddress.computeAddress(
+            factory, 
+            PoolAddress.PoolKey(token0, token1, flashPoolFee)
         );
-        address flashPool = PoolAddress.computeAddress(factory, poolKey);
         require(flashPool != address(0), "Invalid flash pool!");
+        FlashCallbackData memory callbackData = FlashCallbackData({
+            token: loanToken,
+            amount: loanAmount,
+            payer: msg.sender
+        });
         IUniswapV3Pool(flashPool).flash(
             address(this),
             amount0,
             amount1,
             abi.encode(
-                FlashCallbackData({
-                    token: loanToken,
-                    amount: loanAmount,
-                    payer: msg.sender,
-                }),
+                callbackData,
                 flashPool,
-                calldatas
+                calls
             )
-        );   
+        );  
     }
 
     function uniswapV3FlashCallback(
