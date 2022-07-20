@@ -2,12 +2,13 @@
 pragma solidity >=0.8.0;
 pragma abicoder v2;
 
-import { FlashLoanReceiverBase, SafeERC20, SafeMath, IERC20 } from "../utils/FlashLoanReceiverBase.sol";
+import { FlashLoanReceiverBase } from "../utils/FlashLoanReceiverBase.sol";
 import { ILendingPoolAddressesProvider } from "../interfaces/aave/ILendingPoolAddressesProvider.sol";
 import { ILendingPool } from "../interfaces/aave/ILendingPool.sol";
+import { SafeMath } from "../utils/SafeMath.sol";
+import { TransferHelper, IERC20 } from "../utils/TransferHelper.sol";
 contract Aave2Flash is FlashLoanReceiverBase {
     using SafeMath for uint256;
-    using SafeERC20 for IERC20;
     struct Call {
         address to;
         bytes data;
@@ -67,11 +68,11 @@ contract Aave2Flash is FlashLoanReceiverBase {
         uint256 amountOut = IERC20(loanToken).balanceOf(address(this));
         uint256 amountOwed = loanAmount.add(premiums[0]);
         if (amountOut > amountOwed) {
-            IERC20(loanToken).safeApprove(address(LENDING_POOL), amountOwed);
+            TransferHelper.safeApprove(loanToken, address(LENDING_POOL), amountOwed);
         }
         uint256 profit = amountOut.sub(amountOwed);
         if (profit > 0) {
-            IERC20(loanToken).safeTransfer(initiator, profit);
+            TransferHelper.safeTransfer(loanToken, initiator, profit);
         }
         
         return true;
