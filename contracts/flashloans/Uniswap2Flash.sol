@@ -84,15 +84,12 @@ contract Uniswap2Flash is
             (bool success,) = calls[i].to.call(calls[i].data);
             require(success, "Trading Failure!");
         }
-        uint256 amountOut = IERC20(loanToken).balanceOf(address(this));
         uint256 amountOwed = loanAmount.add(((loanAmount.mul(3)).div(997)).add(1));
-        if (amountOut >= amountOwed) {
-            pay(loanToken, address(this), flashPool, amountOwed);
-        }
-        uint256 profit = amountOut.sub(amountOwed);
-        if (profit > 0) {
-            pay(loanToken, address(this), callback.payer, profit);
-        }
+        pay(loanToken, address(this), flashPool, amountOwed);
+       
+        uint256 restAmount = IERC20(loanToken).balanceOf(address(this));
+        pay(loanToken, address(this), callback.payer, restAmount);
+       
     }
 
 }

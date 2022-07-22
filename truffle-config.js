@@ -31,9 +31,10 @@ module.exports = {
     mainnet: {
       provider: new HDWalletProvider(PRIVATE_KEY, "https://mainnet.infura.io/v3/" + INFURA_API_KEY),
       network_id: 1,
-      gas: 5000000,
-      gasPrice: 20000000000, // 20 Gwei
-      // skipDryRun: true
+      gas: 2000000,
+      timeoutBlocks: 50000,
+      // gasPrice: 30000000000, // 20 Gwei
+      skipDryRun: true
     },
   },
 

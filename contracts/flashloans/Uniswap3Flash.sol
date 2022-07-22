@@ -17,7 +17,6 @@ contract Uniswap3Flash is
     IUniswapV3FlashCallback,
     PeripheryImmutableState,
     PeripheryPayments,
-    ReentrancyGuard,
     Ownable {
     using SafeMath for uint256;
     struct FlashCallbackData {
@@ -39,15 +38,18 @@ contract Uniswap3Flash is
         address loanToken,
         uint256 loanAmount,
         Call[] calldata calls
-    ) external payable nonReentrant {
+    ) external {
         address otherToken = loanToken == WETH9 ? DAI : WETH9;
         (address token0, address token1) = loanToken < otherToken ? (loanToken, otherToken) : (otherToken, loanToken);
         uint256 amount0 = loanToken == token0 ? loanAmount : 0;
         uint256 amount1 = loanToken == token1 ? loanAmount : 0;
-        
         address flashPool = PoolAddress.computeAddress(
             factory, 
-            PoolAddress.PoolKey(token0, token1, flashPoolFee)
+            PoolAddress.PoolKey({
+                token0: token0,
+                token1: token1,
+                fee: flashPoolFee
+            })
         );
         require(flashPool != address(0), "Invalid flash pool!");
         FlashCallbackData memory callbackData = FlashCallbackData({
@@ -88,16 +90,13 @@ contract Uniswap3Flash is
             (bool success, ) = calls[i].to.call(calls[i].data);
             require(success, "Trading Failure!");
         }
-        uint256 amountOut = IERC20(loanToken).balanceOf(address(this));
+
         uint256 amountOwed = loanAmount.add(fee);
+        pay(loanToken, address(this), flashPool, amountOwed);
+       
+        uint256 restAmount = IERC20(loanToken).balanceOf(address(this));
+        pay(loanToken, address(this), callback.payer, restAmount);
         
-        if (amountOut >= amountOwed) {
-            pay(loanToken, address(this), flashPool, amountOwed);
-        }
-        uint256 profit = amountOut.sub(amountOwed);
-        if (profit > 0) {
-            pay(loanToken, address(this), callback.payer, profit);
-        }
     }
     function changeFlashPoolFee(uint24 poolFee) public onlyOwner() {
         flashPoolFee = poolFee;
