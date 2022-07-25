@@ -85,18 +85,22 @@ contract Uniswap3Flash is
         uint256 loanAmount = callback.amount;
         uint256 fee = fee0 > 0 ? fee0 : fee1;
         // start trade
-        for (uint i = 0; i < calls.length; i++) {
-           // solhint-disable-next-line avoid-low-level-calls
-            (bool success, ) = calls[i].to.call(calls[i].data);
-            require(success, "Trading Failure!");
-        }
+        tradeExecute(calls);
 
         uint256 amountOwed = loanAmount.add(fee);
         pay(loanToken, address(this), flashPool, amountOwed);
        
         uint256 restAmount = IERC20(loanToken).balanceOf(address(this));
-        pay(loanToken, address(this), callback.payer, restAmount);
+        if (restAmount > 0)
+            pay(loanToken, address(this), callback.payer, restAmount);
         
+    }
+    function tradeExecute(Call[] memory calls) internal {
+        for (uint i = 0; i < calls.length; i++) {
+            // solhint-disable-next-line avoid-low-level-calls
+            (bool success, ) = calls[i].to.call{value: msg.value}(calls[i].data);
+            require(success, "Trading Failure!");
+        }
     }
     function changeFlashPoolFee(uint24 poolFee) public onlyOwner() {
         flashPoolFee = poolFee;

@@ -1,43 +1,33 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: AGPL-3.0
 pragma solidity >=0.8.0;
 pragma abicoder v2;
 
-import { FlashLoanReceiverBase } from "../utils/FlashLoanReceiverBase.sol";
-import { ILendingPoolAddressesProvider } from "../interfaces/aave/ILendingPoolAddressesProvider.sol";
-import { ILendingPool } from "../interfaces/aave/ILendingPool.sol";
+import { FlashLoanSimpleReceiverBase } from "../utils/FlashLoanSimpleReceiverBase.sol";
+import { IPoolAddressesProvider } from "../interfaces/aave/IPoolAddressesProvider.sol";
+import { IPool } from "../interfaces/aave/IPool.sol";
 import { SafeMath } from "../utils/SafeMath.sol";
 import { TransferHelper, IERC20 } from "../utils/TransferHelper.sol";
-contract Aave2Flash is FlashLoanReceiverBase {
+contract Aave3Flash is FlashLoanSimpleReceiverBase {
     using SafeMath for uint256;
     struct Call {
         address to;
         bytes data;
     }
     constructor(
-        ILendingPoolAddressesProvider _lendingPool
-    ) FlashLoanReceiverBase(_lendingPool) {}
+        IPoolAddressesProvider _lendingPool
+    ) FlashLoanSimpleReceiverBase(_lendingPool) {}
    
     function initFlashloan(
         address loanAsset,
         uint256 loanAmount,
         Call[] calldata calls
     ) public {
-      
-        address[] memory loanAssets = new address[](1);
-        loanAssets[0] = loanAsset;
-        uint256[] memory loanAmounts = new uint256[](1);
-        loanAmounts[0] = loanAmount;
         // 0 = no debt, 1 = stable, 2 = variable
         // 0 = pay all loaned
-        uint[] memory modes = new uint[](1);
-        modes[0] = 0;
-
-        LENDING_POOL.flashLoan(
+        POOL.flashLoanSimple(
             address(this),
-            loanAssets,
-            loanAmounts,
-            modes,
-            address(this),
+            loanAsset,
+            loanAmount,
             abi.encode(calls),
             0
         );
@@ -47,14 +37,14 @@ contract Aave2Flash is FlashLoanReceiverBase {
         Mid-flashloan logic i.e. what you do with the temporarily acquired flash liquidity
      */
      function executeOperation(
-        address[] calldata assets,
-        uint256[] calldata amounts,
-        uint256[] calldata premiums,
+        address asset,
+        uint256 amount,
+        uint256 premium,
         address initiator,
         bytes calldata params
     ) external override returns (bool)
     {
-        require(msg.sender == address(LENDING_POOL), "Only Pool can call!");
+        require(msg.sender == address(POOL), "Only Pool can call!");
         Call[] memory calls = abi.decode(params, (Call[]));
 
         // start trade
@@ -63,16 +53,14 @@ contract Aave2Flash is FlashLoanReceiverBase {
             (bool success,) = calls[i].to.call(calls[i].data);
             require(success, "Trading Failure!");
         }
-        address loanToken = assets[0];
-        uint256 loanAmount = amounts[0];
-        uint256 amountOut = IERC20(loanToken).balanceOf(address(this));
-        uint256 amountOwed = loanAmount.add(premiums[0]);
+        uint256 amountOut = IERC20(asset).balanceOf(address(this));
+        uint256 amountOwed = amount.add(premium);
         if (amountOut > amountOwed) {
-            TransferHelper.safeApprove(loanToken, address(LENDING_POOL), amountOwed);
+            TransferHelper.safeApprove(asset, address(POOL), amountOwed);
         }
         uint256 profit = amountOut.sub(amountOwed);
         if (profit > 0) {
-            TransferHelper.safeTransfer(loanToken, initiator, profit);
+            TransferHelper.safeTransfer(asset, initiator, profit);
         }
         
         return true;

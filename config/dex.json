@@ -1,7 +1,8 @@
 {
     "mainnet": {
-        "AaveV2": {
-            "Provider": "0x88757f2f99175387aB4C6a4b3067c77A695b0349"
+        "Aave": {
+            "Provider2": "0xB53C1a33016B2DC2fF3653530bfF1848a515c8c5",
+            "Provider3": "0xD3CEB5a25a068d99609052b3B35cb204b5eC77c6"
         },
         "UniSwapV2": {
             "id": 2,

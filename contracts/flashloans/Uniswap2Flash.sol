@@ -88,7 +88,8 @@ contract Uniswap2Flash is
         pay(loanToken, address(this), flashPool, amountOwed);
        
         uint256 restAmount = IERC20(loanToken).balanceOf(address(this));
-        pay(loanToken, address(this), callback.payer, restAmount);
+        if (restAmount > 0)
+            pay(loanToken, address(this), callback.payer, restAmount);
        
     }
 
