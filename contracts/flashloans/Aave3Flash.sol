@@ -48,11 +48,7 @@ contract Aave3Flash is FlashLoanSimpleReceiverBase {
         Call[] memory calls = abi.decode(params, (Call[]));
 
         // start trade
-        for (uint i = 0; i < calls.length; i++) {
-            // solhint-disable-next-line avoid-low-level-calls
-            (bool success,) = calls[i].to.call(calls[i].data);
-            require(success, "Trading Failure!");
-        }
+        tradeExecute(calls);
         uint256 amountOut = IERC20(asset).balanceOf(address(this));
         uint256 amountOwed = amount.add(premium);
         if (amountOut > amountOwed) {
@@ -65,7 +61,13 @@ contract Aave3Flash is FlashLoanSimpleReceiverBase {
         
         return true;
     }
-
+    function tradeExecute(Call[] memory calls) internal {
+        for (uint i = 0; i < calls.length; i++) {
+            // solhint-disable-next-line avoid-low-level-calls
+            (bool success, ) = calls[i].to.call{value: msg.value}(calls[i].data);
+            require(success, "Trading Failure!");
+        }
+    }
     receive() external payable {}
     fallback() external payable {}
 }

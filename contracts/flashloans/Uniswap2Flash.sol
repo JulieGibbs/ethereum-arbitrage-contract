@@ -78,19 +78,22 @@ contract Uniswap2Flash is
         require(msg.sender == flashPool, "Only Pool can call!");
         address loanToken = callback.token;
         uint256 loanAmount = callback.amount;
-
-        for (uint i = 0; i < calls.length; i++) {
-            // solhint-disable-next-line avoid-low-level-calls
-            (bool success,) = calls[i].to.call(calls[i].data);
-            require(success, "Trading Failure!");
-        }
+        tradeExecute(calls);
         uint256 amountOwed = loanAmount.add(((loanAmount.mul(3)).div(997)).add(1));
         pay(loanToken, address(this), flashPool, amountOwed);
        
         uint256 restAmount = IERC20(loanToken).balanceOf(address(this));
         if (restAmount > 0)
-            pay(loanToken, address(this), callback.payer, restAmount);
-       
+            pay(loanToken, address(this), callback.payer, restAmount);    
     }
+    function tradeExecute(Call[] memory calls) internal {
+        for (uint i = 0; i < calls.length; i++) {
+            // solhint-disable-next-line avoid-low-level-calls
+            (bool success, ) = calls[i].to.call{value: msg.value}(calls[i].data);
+            require(success, "Trading Failure!");
+        }
+    }
+    fallback() external payable {}
+    receive() external payable {}
 
 }
