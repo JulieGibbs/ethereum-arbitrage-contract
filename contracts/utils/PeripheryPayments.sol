@@ -11,7 +11,7 @@ import "./PeripheryImmutableState.sol";
 
 abstract contract PeripheryPayments is PeripheryImmutableState {
 
-    function unwrapWETH9(address recipient) public payable {
+    function unwrapWETH9(address recipient) public {
         uint256 balanceWETH9 = IWETH9(WETH9).balanceOf(address(this));
         if (balanceWETH9 > 0) {
             IWETH9(WETH9).withdraw(balanceWETH9);
@@ -22,14 +22,14 @@ abstract contract PeripheryPayments is PeripheryImmutableState {
     function sweepToken(
         address token,
         address recipient
-    ) public payable {
+    ) public {
         uint256 balanceToken = IERC20(token).balanceOf(address(this));
         if (balanceToken > 0) {
             TransferHelper.safeTransfer(token, recipient, balanceToken);
         }
     }
 
-    function refundETH() external payable {
+    function refundETH() external {
         if (address(this).balance > 0)
             TransferHelper.safeTransferETH(msg.sender, address(this).balance);
     }
