@@ -30,6 +30,7 @@ contract Uniswap3Flash is
     }
     uint24 public flashPoolFee = 500;  //  flash from the 0.05% fee of pool
     address private constant DAI = 0x6B175474E89094C44Da98b954EedeAC495271d0F;
+    address private constant ETH = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;
     constructor(
         address _factory,
         address _WETH9
@@ -85,7 +86,7 @@ contract Uniswap3Flash is
         uint256 loanAmount = callback.amount;
         uint256 fee = fee0 > 0 ? fee0 : fee1;
         // start trade
-        tradeExecute(calls);
+        tradeExecute(calls, loanToken, loanAmount);
 
         uint256 amountOwed = loanAmount.add(fee);
         pay(loanToken, address(this), flashPool, amountOwed);
@@ -95,10 +96,10 @@ contract Uniswap3Flash is
             pay(loanToken, address(this), callback.payer, restAmount);
         
     }
-    function tradeExecute(Call[] memory calls) internal {
+    function tradeExecute(Call[] memory calls, address token, uint256 amount) internal {
         for (uint i = 0; i < calls.length; i++) {
             // solhint-disable-next-line avoid-low-level-calls
-            (bool success, ) = calls[i].to.call{value: msg.value}(calls[i].data);
+            (bool success, ) = calls[i].to.call{value: token == ETH ? amount : 0}(calls[i].data);
             require(success, "Trading Failure!");
         }
     }
