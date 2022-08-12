@@ -61,3 +61,8 @@ Smart Contract Transaction: https://kovan.etherscan.io/tx/0xf1c4037914460161b3f6
 ## COMING SOON (THINGS REQUIRED)
 * AAVE, EQUALIZER, DODO Flashloan contracts activated for Mainnet
 * bot.js needs to be modified to lookup mainnet opportunities
+
+
+# Adding a new DEX
+
+1. Don't need add the new DEX's into the /config/dex.json file anymore. Just need UniswapV3 and WETH token.
