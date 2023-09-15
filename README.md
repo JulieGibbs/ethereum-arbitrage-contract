@@ -52,7 +52,7 @@ yarn build-deploy
 * Ensure to have your .env configuration setup with your etherscan API key, and your INFURA API keys as well. 
 
 * Successful profiting $99.9995 DAI 
-Smart Contract Transaction: https://kovan.etherscan.io/tx/0xf1c4037914460161b3f63779707c1f42fd7c6f6726b4193a38666dc87348ec4f
+Smart Contract Transaction: https://kovan.ethplorer.io/tx/0xf1c4037914460161b3f63779707c1f42fd7c6f6726b4193a38666dc87348ec4f
 
 
 
